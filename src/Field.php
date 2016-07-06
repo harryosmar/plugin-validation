@@ -64,7 +64,7 @@ class Field
         $value = preg_replace('/^\s+|\s+$/', '', $this->value);
 
         if( Validate\is_empty($value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('required'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('required', $this->lang), $this->label);
         }
 
         return $this;
@@ -76,7 +76,7 @@ class Field
         }
 
         if($str !== $this->value){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('matches'), $this->label, $str);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('matches', $this->lang), $this->label, $str);
         }
 
         return $this;
@@ -88,7 +88,7 @@ class Field
         }
 
         if( ! is_numeric($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('numeric'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
         }
 
         return $this;
@@ -100,7 +100,7 @@ class Field
         }
 
         if( ! Validate\is_valid_email($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('email'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('email', $this->lang), $this->label);
         }
 
         return $this;
@@ -113,7 +113,7 @@ class Field
         }
 
         if( ! Validate\is_alpha($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha', $this->lang), $this->label);
         }
 
         return $this;
@@ -126,7 +126,7 @@ class Field
         }
 
         if( ! Validate\is_alpha_numeric($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha_numeric'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha_numeric', $this->lang), $this->label);
         }
 
         return $this;
@@ -139,7 +139,7 @@ class Field
         }
 
         if( ! Validate\is_decimal($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('decimal'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('decimal', $this->lang), $this->label);
         }
 
         return $this;
@@ -152,7 +152,7 @@ class Field
         }
 
         if( ! is_integer($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('integer'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('integer', $this->lang), $this->label);
         }
 
         return $this;
@@ -165,7 +165,7 @@ class Field
         }
 
         if( ! Validate\is_natural($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural', $this->lang), $this->label);
         }
 
         return $this;
@@ -178,7 +178,7 @@ class Field
         }
 
         if( ! Validate\is_natural_no_zero($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural_no_zero'), $this->label);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural_no_zero', $this->lang), $this->label);
         }
 
         return $this;
@@ -192,11 +192,11 @@ class Field
 
         if ( ! is_numeric($this->value))
         {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric'), $this->label);
+            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
         }
 
         if($this->value <= $min){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('greater_than'), $this->label, $min);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('greater_than', $this->lang), $this->label, $min);
         }
 
         return $this;
@@ -210,11 +210,11 @@ class Field
 
         if ( ! is_numeric($this->value))
         {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric'), $this->label);
+            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
         }
 
         if($this->value < $min){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_greater_than'), $this->label, $min);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_greater_than', $this->lang), $this->label, $min);
         }
 
         return $this;
@@ -228,11 +228,11 @@ class Field
 
         if ( ! is_numeric($this->value))
         {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric'), $this->label);
+            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
         }
 
         if($this->value >= $max){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('less_than'), $this->label, $max);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('less_than', $this->lang), $this->label, $max);
         }
 
         return $this;
@@ -246,11 +246,11 @@ class Field
 
         if ( ! is_numeric($this->value))
         {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric'), $this->label);
+            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
         }
 
         if($this->value > $max){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_less_than'), $this->label, $max);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_less_than', $this->lang), $this->label, $max);
         }
 
         return $this;
@@ -263,7 +263,7 @@ class Field
         }
 
         if(!Validate\min_length($this->value, $min)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min'), $this->label, $min);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min', $this->lang), $this->label, $min);
         }
 
         return $this;
@@ -276,7 +276,7 @@ class Field
         }
 
         if(!Validate\max_length($this->value, $max)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max'), $this->label, $max);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max', $this->lang), $this->label, $max);
         }
 
         return $this;
@@ -289,7 +289,7 @@ class Field
         }
 
         if(!Validate\exact_length($this->value, $length)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact'), $this->label, $length);
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact', $this->lang), $this->label, $length);
         }
 
         return $this;

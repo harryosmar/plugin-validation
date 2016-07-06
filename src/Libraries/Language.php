@@ -23,7 +23,7 @@ class Language{
         return self::$instance;
     }
 
-    public function getMessage($key = null, $lang = null){
+    public function getMessage($key = null, $lang){
         return isset($this->langs[$lang][$key]) ? $this->langs[$lang][$key] : null;
     }
 
