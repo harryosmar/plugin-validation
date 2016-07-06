@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="tests/bootstrap.php" processIsolation="false" stopOnFailure="false" colors="true">
+    <testsuites>
+        <testsuite name="Http Client Plugin Test Suite">
+            <directory>tests/plugin-validate/</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">src/</directory>
+        </whitelist>
+    </filter>
+
+    <php>
+    </php>
+
+    <logging>
+        <log type="testdox-html" target="reports/testdox.html" />
+        <log type="testdox-text" target="reports/testdox.txt" />
+    </logging>    
+</phpunit>

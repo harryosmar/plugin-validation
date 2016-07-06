@@ -1,0 +1,46 @@
+{
+    "name": "harryosmar/plugin-validation",
+    "type": "library",
+    "description": "PHP Composer Plugin for Validation",
+    "keywords": ["validation", "form validation", "validaton rules"],
+    "homepage": "https://github.com/harryosmar/plugin-validation",
+    "authors": [
+        {
+            "name": "harry osmar sitohang",
+            "email": "harryosmarsitohang@gmail.com",
+            "homepage": "https://github.com/harryosmar"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:harryosmar/plugin-validation"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "mockery/mockery": "^0.9.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "PluginSimpleValidation\\": "src/"
+        },
+        "files": [
+            "src/functions_include.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PluginSimpleValidation\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+
+        }
+    }
+}
