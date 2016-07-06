@@ -11,11 +11,11 @@ Add this composer.json file
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:harryosmar/validation.git"
+            "url": "git@github.com:harryosmar/plugin-validation.git"
         }
     ],
     "require": {
-        "harryosmar/validation": "dev-master"
+        "harryosmar/plugin-validation": "dev-master"
     }
 }
 ```
@@ -26,7 +26,7 @@ $ composer install
 ```
 
 ## Documentation
-find it here <https://github.com/harryosmar/validation/wiki>
+find it here <https://github.com/harryosmar/plugin-validation/wiki>
 
 ## About
 
@@ -34,4 +34,4 @@ find it here <https://github.com/harryosmar/validation/wiki>
 ### Submitting bugs and feature requests
 Harry Osmar Sitohang - <harryosmarsitohang@gmail.com> - <https://github.com/harryosmar><br />
 Harry Osmar Sitohang - <harry@olx.co.id> - <https://github.com/harryolx><br />
-See also the list of [contributors](https://github.com/harryosmar/validation/contributors) which participated in this project.
+See also the list of [contributors](https://github.com/harryosmar/plugin-validation/contributors) which participated in this project.
