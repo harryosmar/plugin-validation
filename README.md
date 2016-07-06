@@ -7,7 +7,6 @@ Add this composer.json file
 
 ```json
 {
-   "minimum-stability": "dev",
     "repositories": [
         {
             "type": "vcs",
@@ -15,7 +14,7 @@ Add this composer.json file
         }
     ],
     "require": {
-        "harryosmar/plugin-validation": "dev-master"
+        "harryosmar/plugin-validation": "1.0.*"
     }
 }
 ```
