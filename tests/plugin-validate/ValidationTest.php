@@ -16,7 +16,7 @@ class ValidationTest extends BaseTest {
         $validation = new Validation();
         $validation->addField(new Field('label1', 'value1'))->addField(new Field('label2', 'value2'));
         $this->assertCount(2, $validation->getFields());
-        $this->assertContainsOnly('PluginApiClient\libraries\validate\Field', $validation->getFields());
+        $this->assertContainsOnly('PluginSimpleValidate\Field', $validation->getFields());
         $this->assertEquals([
             'label1' => new Field('label1', 'value1'),
             'label2' => new Field('label2', 'value2')
@@ -27,7 +27,7 @@ class ValidationTest extends BaseTest {
         $validation = new Validation();
         $validation->addField(new Field('label1', 'value1'))->addField(new Field('label2', 'value2'), true);
         $this->assertCount(1, $validation->getFields());
-        $this->assertContainsOnly('PluginApiClient\libraries\validate\Field', $validation->getFields());
+        $this->assertContainsOnly('PluginSimpleValidate\Field', $validation->getFields());
         $this->assertEquals([
             'label2' => new Field('label2', 'value2')
         ], $validation->getFields());

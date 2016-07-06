@@ -1,9 +1,7 @@
 <?php
 namespace tests\PluginSimpleValidate;
 
-use tests\PluginSimpleValidate\BaseTest;
 use PluginSimpleValidate\Field;
-
 
 class FieldTest extends BaseTest {
     public function setUp(){
