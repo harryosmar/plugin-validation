@@ -36,7 +36,7 @@ class ValidationTest extends BaseTest {
     public function test_run_break_when_error_false(){
         $validation = new Validation();
         $validation->addField((new Field('email', 'xxx.com'))->is_required('required')->is_valid_email('must be a valid email'))
-            ->addField((new Field('password', 'abc'))->is_required('required')->min_length(5, "min length 5"))
+            ->addField((new Field('password', 'abc'))->is_required('required')->min(5, "min length 5"))
             ->addField((new Field('confirm password', 'abx'))->is_required('required')->is_matches('abc', 'confirm password must match with password'));
 
 
@@ -54,7 +54,7 @@ class ValidationTest extends BaseTest {
         $validation = new Validation();
 
         $validation->addField((new Field('email', 'xxx.com'))->is_required('required')->is_valid_email('must be a valid email'))
-            ->addField((new Field('password', 'abc'))->is_required('required')->min_length(5, "min length 5"))
+            ->addField((new Field('password', 'abc'))->is_required('required')->min(5, "min length 5"))
             ->addField((new Field('confirm password', 'abx'))->is_required('required')->is_matches('abc', 'confirm password must match with password'));
 
 

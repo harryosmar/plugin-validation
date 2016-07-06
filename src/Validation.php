@@ -2,6 +2,8 @@
 
 namespace PluginSimpleValidate;
 
+use PluginSimpleValidate\Libraries\Config;
+
 class Validation
 {
 
@@ -9,12 +11,12 @@ class Validation
 
     private $errors = [];
 
-
-    private $lang;
-
-    public function __construct($lang = 'en')
+    public function __construct($lang = null)
     {
-        $this->lang = $lang;
+        $lang = $lang === null ? Config::getInstance()->getDefaultLanguages() : $lang;
+        if(Config::getInstance()->isValidLanguage($lang)){
+            $this->lang = $lang;
+        }
     }
 
     /**
@@ -27,6 +29,7 @@ class Validation
             $this->fields = [];
         }
 
+        $field->setLanguage($this->lang);
         $this->fields[$field->getLabel()] = $field;
         return $this;
     }

@@ -166,39 +166,39 @@ class FieldTest extends BaseTest {
         $this->assertNull($field->equal_or_less_than(2)->getErrorMessage());
     }
 
-    public function test_min_length_false(){
+    public function test_min_false(){
         $field = new Field('label', 'a');
-        $this->assertEquals("The label field length must be equal or greater than 2", $field->min_length(2)->getErrorMessage());
+        $this->assertEquals("The label field length must be equal or greater than 2", $field->min(2)->getErrorMessage());
     }
 
-    public function test_min_length_true(){
+    public function test_min_true(){
         $field = new Field('label', 'abc');
-        $this->assertNull($field->min_length(2)->getErrorMessage());
+        $this->assertNull($field->min(2)->getErrorMessage());
     }
 
-    public function test_max_length_false(){
+    public function test_max_false(){
         $field = new Field('label', 'abc');
-        $this->assertEquals("The label field length must be equal or less than 2", $field->max_length(2)->getErrorMessage());
+        $this->assertEquals("The label field length must be equal or less than 2", $field->max(2)->getErrorMessage());
     }
 
-    public function test_max_length_true(){
+    public function test_max_true(){
         $field = new Field('label', 'ab');
-        $this->assertNull($field->max_length(2)->getErrorMessage());
+        $this->assertNull($field->max(2)->getErrorMessage());
     }
 
-    public function test_exact_length_false(){
+    public function test_exact_false(){
         $field = new Field('label', 'abc');
-        $this->assertEquals("The label field length must be exactly 2", $field->exact_length(2)->getErrorMessage());
+        $this->assertEquals("The label field length must be exactly 2", $field->exact(2)->getErrorMessage());
     }
 
-    public function test_exact_length_true(){
+    public function test_exact_true(){
         $field = new Field('label', 'ab');
-        $this->assertNull($field->exact_length(2)->getErrorMessage());
+        $this->assertNull($field->exact(2)->getErrorMessage());
     }
 
     public function test_check_error_in_multiple_validation(){
         $field = new Field('email', 'abcd');
-        $field->is_required()->min_length(5)->is_valid_email();
+        $field->is_required()->min(5)->is_valid_email();
         $this->assertEquals('The email field length must be equal or greater than 5', $field->getErrorMessage());
     }
 }
