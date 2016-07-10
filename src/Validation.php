@@ -30,7 +30,7 @@ class Validation
         }
 
         $field->setLanguage($this->lang);
-        $this->fields[$field->getLabel()] = $field;
+        $this->fields[$field->getField()] = $field;
         return $this;
     }
 
@@ -42,7 +42,7 @@ class Validation
         /** @var Field $field */
         foreach($this->fields as $field){
             if(!$field->isValid()){
-                $this->errors[$field->getLabel()] = $field->getErrorMessage();
+                $this->errors[$field->getField()] = $field->getErrorMessage();
                 if($break_when_error){
                     break;
                 }

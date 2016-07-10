@@ -3,16 +3,21 @@
 namespace PluginSimpleValidate;
 
 use PluginSimpleValidate\helper\Validate;
-use PluginSimpleValidate\Libraries\Config;
 use PluginSimpleValidate\Libraries\Language;
 
 class Field
 {
-    protected $label, $value, $error, $lang;
+    private $field, $value, $label, $error, $lang;
 
-    public function __construct($label, $value, $lang = 'en'){
-        $this->label = $label;
+
+    private $rules = [];
+
+    private $numeric_rules = ['numeric', 'integer', 'decimal'];
+
+    public function __construct($field, $value, $label = null, $lang = 'en'){
+        $this->field = $field;
         $this->value = $value;
+        $this->label = $label === null ? $this->field : $label;
         $this->lang = $lang;
     }
 
@@ -21,13 +26,13 @@ class Field
         return $this;
     }
 
-    public function setLabel($label){
-        $this->label = $label;
+    public function setField($field){
+        $this->field = $field;
         return $this;
     }
 
-    public function getLabel(){
-        return $this->label;
+    public function getField(){
+        return $this->field;
     }
 
     public function setValue($value){
@@ -39,6 +44,15 @@ class Field
         return $this->value;
     }
 
+    public function setLabel($label){
+        $this->label = $label;
+        return $this;
+    }
+
+    public function getLabel(){
+        return $this->label;
+    }
+
     public function getErrorMessage(){
         return $this->error;
     }
@@ -48,6 +62,8 @@ class Field
     }
 
     public function is_true($condition, $message){
+        $this->rules[] = 'is_true';
+
         if( !$condition ){
             $this->error = $message;
         }
@@ -57,6 +73,8 @@ class Field
 
     public function is_required($message = null)
     {
+        $this->rules[] = 'is_required';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -71,6 +89,8 @@ class Field
     }
 
     public function is_matches($str, $message = null){
+        $this->rules[] = 'is_matches';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -83,6 +103,8 @@ class Field
     }
 
     public function is_numeric($message = null){
+        $this->rules[] = 'is_numeric';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -95,6 +117,8 @@ class Field
     }
 
     public function is_valid_email($message = null){
+        $this->rules[] = 'is_valid_email';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -108,6 +132,8 @@ class Field
 
     public function is_alpha($message = null)
     {
+        $this->rules[] = 'is_alpha';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -121,6 +147,8 @@ class Field
 
     public function is_alpha_numeric($message = null)
     {
+        $this->rules[] = 'is_alpha_numeric';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -134,6 +162,8 @@ class Field
 
     public function is_decimal($message = null)
     {
+        $this->rules[] = 'is_decimal';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -147,6 +177,8 @@ class Field
 
     public function is_integer($message = null)
     {
+        $this->rules[] = 'is_integer';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -160,6 +192,8 @@ class Field
 
     public function is_natural($message = null)
     {
+        $this->rules[] = 'is_natural';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -173,6 +207,8 @@ class Field
 
     public function is_natural_no_zero($message = null)
     {
+        $this->rules[] = 'is_natural_no_zero';
+
         if(!empty($this->error)){
             return $this;
         }
@@ -184,85 +220,25 @@ class Field
         return $this;
     }
 
-    public function greater_than($min, $message = null)
-    {
-        if(!empty($this->error)){
-            return $this;
+    private function hasNumericRules(){
+        foreach($this->rules as $rule){
+            if(in_array($rule, $this->numeric_rules)){
+                return true;
+            }
         }
 
-        if ( ! is_numeric($this->value))
-        {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
-        }
-
-        if($this->value <= $min){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('greater_than', $this->lang), $this->label, $min);
-        }
-
-        return $this;
-    }
-
-    public function equal_or_greater_than($min, $message = null)
-    {
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if ( ! is_numeric($this->value))
-        {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
-        }
-
-        if($this->value < $min){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_greater_than', $this->lang), $this->label, $min);
-        }
-
-        return $this;
-    }
-
-    public function less_than($max, $message = null)
-    {
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if ( ! is_numeric($this->value))
-        {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
-        }
-
-        if($this->value >= $max){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('less_than', $this->lang), $this->label, $max);
-        }
-
-        return $this;
-    }
-
-    public function equal_or_less_than($max, $message = null)
-    {
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if ( ! is_numeric($this->value))
-        {
-            $this->error = sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
-        }
-
-        if($this->value > $max){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal_or_less_than', $this->lang), $this->label, $max);
-        }
-
-        return $this;
+        return false;
     }
 
     public function min($min, $message = null)
     {
+        $this->rules[] = 'min';
+
         if(!empty($this->error)){
             return $this;
         }
 
-        if(!Validate\min_length($this->value, $min)){
+        if(!Validate\min_length($this->value, $min, $this->hasNumericRules())){
             $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min', $this->lang), $this->label, $min);
         }
 
@@ -271,11 +247,13 @@ class Field
 
     public function max($max, $message = null)
     {
+        $this->rules[] = 'max';
+
         if(!empty($this->error)){
             return $this;
         }
 
-        if(!Validate\max_length($this->value, $max)){
+        if(!Validate\max_length($this->value, $max, $this->hasNumericRules())){
             $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max', $this->lang), $this->label, $max);
         }
 
@@ -284,12 +262,29 @@ class Field
 
     public function exact($length, $message = null)
     {
+        $this->rules[] = 'exact';
+
         if(!empty($this->error)){
             return $this;
         }
 
-        if(!Validate\exact_length($this->value, $length)){
+        if(!Validate\exact_length($this->value, $length, $this->hasNumericRules())){
             $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact', $this->lang), $this->label, $length);
+        }
+
+        return $this;
+    }
+
+    public function equal($expected, $message = null)
+    {
+        $this->rules[] = 'equal';
+
+        if(!empty($this->error)){
+            return $this;
+        }
+
+        if(!Validate\equal($expected, $this->value)){
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal', $this->lang), $this->label, $expected);
         }
 
         return $this;

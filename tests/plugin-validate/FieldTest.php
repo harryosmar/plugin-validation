@@ -38,7 +38,7 @@ class FieldTest extends BaseTest {
 
     public function test_is_matches_false(){
         $field = new Field('label', 'value1');
-        $this->assertEquals("The label field is not matches with 'value2'.", $field->is_matches('value2')->getErrorMessage());
+        $this->assertEquals('The label field is not matches with "value2".', $field->is_matches('value2')->getErrorMessage());
     }
 
     public function test_is_matches_true(){
@@ -108,7 +108,7 @@ class FieldTest extends BaseTest {
 
     public function test_is_natural_false(){
         $field = new Field('label', -1);
-        $this->assertEquals("The label field may only contain positive numbers", $field->is_natural()->getErrorMessage());
+        $this->assertEquals('The label field may only contain positive numbers.', $field->is_natural()->getErrorMessage());
     }
 
     public function test_is_natural_true(){
@@ -118,7 +118,7 @@ class FieldTest extends BaseTest {
 
     public function test_is_natural_no_zero_false(){
         $field = new Field('label', 0);
-        $this->assertEquals("The label field may only contain positive numbers greater than zero", $field->is_natural_no_zero()->getErrorMessage());
+        $this->assertEquals('The label field may only contain positive numbers greater than zero.', $field->is_natural_no_zero()->getErrorMessage());
     }
 
     public function test_is_natural_no_zero_true(){
@@ -126,49 +126,9 @@ class FieldTest extends BaseTest {
         $this->assertNull($field->is_natural_no_zero()->getErrorMessage());
     }
 
-    public function test_greater_than_false(){
-        $field = new Field('label', 2);
-        $this->assertEquals("The label field must be greater than 2", $field->greater_than(2)->getErrorMessage());
-    }
-
-    public function test_greater_than_true(){
-        $field = new Field('label', 3);
-        $this->assertNull($field->greater_than(2)->getErrorMessage());
-    }
-
-    public function equal_or_greater_than_false(){
-        $field = new Field('label', 1);
-        $this->assertEquals("The label field must be greater or equal than 2", $field->equal_or_greater_than(2)->getErrorMessage());
-    }
-
-    public function equal_or_greater_than_true(){
-        $field = new Field('label', 2);
-        $this->assertNull($field->equal_or_greater_than(2)->getErrorMessage());
-    }
-
-    public function test_less_than_false(){
-        $field = new Field('label', 2);
-        $this->assertEquals("The label field must be less than 2.", $field->less_than(2)->getErrorMessage());
-    }
-
-    public function test_less_than_true(){
-        $field = new Field('label', 1);
-        $this->assertNull($field->less_than(2)->getErrorMessage());
-    }
-
-    public function test_equal_or_less_than_false(){
-        $field = new Field('label', 3);
-        $this->assertEquals("The label field must be equal or less than 2.", $field->equal_or_less_than(2)->getErrorMessage());
-    }
-
-    public function test_equal_or_less_than_true(){
-        $field = new Field('label', 2);
-        $this->assertNull($field->equal_or_less_than(2)->getErrorMessage());
-    }
-
     public function test_min_false(){
         $field = new Field('label', 'a');
-        $this->assertEquals("The label field must be at least 2.", $field->min(2)->getErrorMessage());
+        $this->assertEquals('The label field must be at least 2.', $field->min(2)->getErrorMessage());
     }
 
     public function test_min_true(){
