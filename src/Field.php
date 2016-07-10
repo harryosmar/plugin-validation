@@ -62,7 +62,7 @@ class Field
     }
 
     public function is_true($condition, $message){
-        $this->rules[] = 'is_true';
+        $this->rules[] = 'true';
 
         if( !$condition ){
             $this->error = $message;
@@ -73,7 +73,7 @@ class Field
 
     public function is_required($message = null)
     {
-        $this->rules[] = 'is_required';
+        $this->rules[] = 'required';
 
         if(!empty($this->error)){
             return $this;
@@ -89,7 +89,7 @@ class Field
     }
 
     public function is_matches($str, $message = null){
-        $this->rules[] = 'is_matches';
+        $this->rules[] = 'matches';
 
         if(!empty($this->error)){
             return $this;
@@ -103,7 +103,7 @@ class Field
     }
 
     public function is_numeric($message = null){
-        $this->rules[] = 'is_numeric';
+        $this->rules[] = 'numeric';
 
         if(!empty($this->error)){
             return $this;
@@ -117,7 +117,7 @@ class Field
     }
 
     public function is_valid_email($message = null){
-        $this->rules[] = 'is_valid_email';
+        $this->rules[] = 'valid_email';
 
         if(!empty($this->error)){
             return $this;
@@ -132,7 +132,7 @@ class Field
 
     public function is_alpha($message = null)
     {
-        $this->rules[] = 'is_alpha';
+        $this->rules[] = 'alpha';
 
         if(!empty($this->error)){
             return $this;
@@ -147,7 +147,7 @@ class Field
 
     public function is_alpha_numeric($message = null)
     {
-        $this->rules[] = 'is_alpha_numeric';
+        $this->rules[] = 'alpha_numeric';
 
         if(!empty($this->error)){
             return $this;
@@ -162,7 +162,7 @@ class Field
 
     public function is_decimal($message = null)
     {
-        $this->rules[] = 'is_decimal';
+        $this->rules[] = 'decimal';
 
         if(!empty($this->error)){
             return $this;
@@ -177,7 +177,7 @@ class Field
 
     public function is_integer($message = null)
     {
-        $this->rules[] = 'is_integer';
+        $this->rules[] = 'integer';
 
         if(!empty($this->error)){
             return $this;
@@ -192,7 +192,7 @@ class Field
 
     public function is_natural($message = null)
     {
-        $this->rules[] = 'is_natural';
+        $this->rules[] = 'natural';
 
         if(!empty($this->error)){
             return $this;
@@ -207,7 +207,7 @@ class Field
 
     public function is_natural_no_zero($message = null)
     {
-        $this->rules[] = 'is_natural_no_zero';
+        $this->rules[] = 'natural_no_zero';
 
         if(!empty($this->error)){
             return $this;
@@ -238,8 +238,10 @@ class Field
             return $this;
         }
 
-        if(!Validate\min_length($this->value, $min, $this->hasNumericRules())){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min', $this->lang), $this->label, $min);
+        $hasNumericRules = $this->hasNumericRules();
+
+        if(!Validate\min_length($this->value, $min, $hasNumericRules)){
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $min);
         }
 
         return $this;
@@ -253,14 +255,16 @@ class Field
             return $this;
         }
 
-        if(!Validate\max_length($this->value, $max, $this->hasNumericRules())){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max', $this->lang), $this->label, $max);
+        $hasNumericRules = $this->hasNumericRules();
+
+        if(!Validate\max_length($this->value, $max, $hasNumericRules)){
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $max);
         }
 
         return $this;
     }
 
-    public function exact($length, $message = null)
+    public function exact_length($length, $message = null)
     {
         $this->rules[] = 'exact';
 
@@ -268,8 +272,10 @@ class Field
             return $this;
         }
 
-        if(!Validate\exact_length($this->value, $length, $this->hasNumericRules())){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact', $this->lang), $this->label, $length);
+        $hasNumericRules = $this->hasNumericRules();
+
+        if(!Validate\exact_length($this->value, $length, $hasNumericRules)){
+            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $length);
         }
 
         return $this;

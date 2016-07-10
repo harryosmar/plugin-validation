@@ -126,39 +126,79 @@ class FieldTest extends BaseTest {
         $this->assertNull($field->is_natural_no_zero()->getErrorMessage());
     }
 
-    public function test_min_false(){
+    public function test_min_string_length_false(){
         $field = new Field('label', 'a');
-        $this->assertEquals('The label field must be at least 2.', $field->min(2)->getErrorMessage());
+        $this->assertEquals('The label field length must be at least 2.', $field->min(2)->getErrorMessage());
     }
 
-    public function test_min_true(){
+    public function test_min_string_length_true(){
         $field = new Field('label', 'abc');
         $this->assertNull($field->min(2)->getErrorMessage());
     }
 
-    public function test_max_false(){
-        $field = new Field('label', 'abc');
-        $this->assertEquals("The label field may not be greater than 2.", $field->max(2)->getErrorMessage());
+    public function test_min_number_false(){
+        $field = new Field('label', 1);
+        $this->assertEquals('The label field must be at least 2.', $field->is_integer()->min(2)->getErrorMessage());
     }
 
-    public function test_max_true(){
+    public function test_min_number_true(){
+        $field = new Field('label', 2);
+        $this->assertNull($field->is_integer()->min(2)->getErrorMessage());
+    }
+
+    public function test_min_array_false(){
+        $field = new Field('label', [1]);
+        $this->assertEquals('The label field length must be at least 2.', $field->min(2)->getErrorMessage());
+    }
+
+    public function test_min_array_true(){
+        $field = new Field('label', [1,2]);
+        $this->assertNull($field->min(2)->getErrorMessage());
+    }
+
+    public function test_max_string_length_false(){
+        $field = new Field('label', 'abc');
+        $this->assertEquals('The label field length may not be greater than 2.', $field->max(2)->getErrorMessage());
+    }
+
+    public function test_max_string_length_true(){
         $field = new Field('label', 'ab');
         $this->assertNull($field->max(2)->getErrorMessage());
     }
 
-    public function test_exact_false(){
-        $field = new Field('label', 'abc');
-        $this->assertEquals("The label field length must be exactly 2.", $field->exact(2)->getErrorMessage());
+    public function test_max_number_false(){
+        $field = new Field('label', 3);
+        $this->assertEquals('The label field may not be greater than 2.', $field->is_integer()->max(2)->getErrorMessage());
     }
 
-    public function test_exact_true(){
+    public function test_max_number_true(){
+        $field = new Field('label', 2);
+        $this->assertNull($field->is_integer()->max(2)->getErrorMessage());
+    }
+
+    public function test_max_array_false(){
+        $field = new Field('label', [1,2,3]);
+        $this->assertEquals('The label field length may not be greater than 2.', $field->max(2)->getErrorMessage());
+    }
+
+    public function test_max_array_true(){
+        $field = new Field('label', [1,2]);
+        $this->assertNull($field->max(2)->getErrorMessage());
+    }
+
+    public function test_exact_length_false(){
+        $field = new Field('label', 'abc');
+        $this->assertEquals("The label field length must be exactly 2.", $field->exact_length(2)->getErrorMessage());
+    }
+
+    public function test_exact_length_true(){
         $field = new Field('label', 'ab');
-        $this->assertNull($field->exact(2)->getErrorMessage());
+        $this->assertNull($field->exact_length(2)->getErrorMessage());
     }
 
     public function test_check_error_in_multiple_validation(){
-        $field = new Field('email', 'abcd');
+        $field = new Field('email', 'abcd', 'email address');
         $field->is_required()->min(5)->is_valid_email();
-        $this->assertEquals('The email field must be at least 5.', $field->getErrorMessage());
+        $this->assertEquals('The email address field length must be at least 5.', $field->getErrorMessage());
     }
 }

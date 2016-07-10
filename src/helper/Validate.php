@@ -42,40 +42,54 @@ function is_natural_no_zero($value){
     return preg_match('/^[1-9]+$/', $value);
 }
 
-
-function max_length($value, $max, $hasNumericRules = false){
-    $max = intval($max);
+function get_type($value, $hasNumericRules = false){
     if (is_numeric($value) && $hasNumericRules) {
-        return $value > $max ? false : true;
-    } elseif (is_array($value)) {
-        return count($value) > $max ? false : true;
+        return 'number';
+    }elseif (is_array($value)) {
+        return 'array';
     }
 
-    return mb_strlen($value) > $max ? false : true;
+    return 'string';
 }
-
 
 function min_length($value, $min, $hasNumericRules = false){
     $min = intval($min);
-    if (is_numeric($value) && $hasNumericRules) {
-        return $value < $min ? false : true;
-    } elseif (is_array($value)) {
-        return count($value) < $min ? false : true;
-    }
 
-    return mb_strlen($value) < $min ? false : true;
+    switch (get_type($value, $hasNumericRules)) {
+        case 'number':
+            return $value < $min ? false : true;
+        case 'array':
+            return count($value) < $min ? false : true;
+        default :
+            return mb_strlen($value) < $min ? false : true;
+    }
+}
+
+function max_length($value, $max, $hasNumericRules = false){
+    $max = intval($max);
+
+    switch (get_type($value, $hasNumericRules)) {
+        case 'number':
+            return $value > $max ? false : true;
+        case 'array':
+            return count($value) > $max ? false : true;
+        default :
+            return mb_strlen($value) > $max ? false : true;
+    }
 }
 
 
 function exact_length($value, $length, $hasNumericRules = false){
     $length = intval($length);
-    if (is_numeric($value) && $hasNumericRules) {
-        return $value === $length ? true : false;
-    } elseif (is_array($value)) {
-        return count($value) === $length ? true : false;
-    }
 
-    return mb_strlen($value) === $length ? true : false;
+    switch (get_type($value, $hasNumericRules)) {
+        case 'number':
+            return $value === $length ? true : false;
+        case 'array':
+            return count($value) === $length ? true : false;
+        default :
+            return mb_strlen($value) === $length ? true : false;
+    }
 }
 
 

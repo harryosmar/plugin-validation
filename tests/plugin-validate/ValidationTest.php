@@ -45,7 +45,7 @@ class ValidationTest extends BaseTest {
 
         $this->assertEquals([
             'email' => 'The email address field must be a valid email address.',
-            'password' => 'The password field must be at least 5.',
+            'password' => 'The password field length must be at least 5.',
             'confirm password' => 'The password confirmation field is not matches with "abc".',
         ], $validation->getErrors());
     }
