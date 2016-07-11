@@ -18,6 +18,6 @@ return [
     'max:string' => 'Kolom %s harus memiliki panjang maximal %d.',
     'natural' => 'Kolom %s harus berisi hanya angka positif.',
     'natural_no_zero' => 'Kolom %s harus berisi angka lebih besar dari nol.',
-    'numeric' => 'Kolom %s harus berisi karakter numerik.',
+    'numeric' => 'Kolom %s harus berisi angka.',
     'required' => 'Kolom %s harus diisi.',
 ];

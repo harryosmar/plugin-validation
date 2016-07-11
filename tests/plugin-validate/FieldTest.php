@@ -85,7 +85,7 @@ class FieldTest extends BaseTest {
     public function test_is_numeric_false_where_used_lang_id(){
         $field = new Field('field', 'value');
         $this->assertFalse($field->is_numeric()->setLanguage('id')->runValidation());
-        $this->assertEquals('Kolom field harus berisi karakter numerik.', $field->getErrorMessage());
+        $this->assertEquals('Kolom field harus berisi angka.', $field->getErrorMessage());
     }
 
     public function test_is_valid_email_true(){
