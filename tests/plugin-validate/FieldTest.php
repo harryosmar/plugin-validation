@@ -16,15 +16,15 @@ class FieldTest extends BaseTest {
         $this->assertEquals(true, $field->isValid());
     }
 
-    public function test_is_true_where_value_is_boolean_true(){
-        $field = new Field('field', true);
-        $this->assertTrue($field->is_true('error message')->runValidation());
+    public function test_is_true_where_condition_is_boolean_true(){
+        $field = new Field('field', 'value');
+        $this->assertTrue($field->is_true(true, 'error message')->runValidation());
         $this->assertNull($field->getErrorMessage());
     }
 
-    public function test_is_true_where_value_is_boolean_false(){
-        $field = new Field('field', false);
-        $this->assertFalse($field->is_true('error message')->runValidation());
+    public function test_is_true_where_condition_is_boolean_false(){
+        $field = new Field('field', 'value');
+        $this->assertFalse($field->is_true(false, 'error message')->runValidation());
         $this->assertEquals('error message', $field->getErrorMessage());
     }
 

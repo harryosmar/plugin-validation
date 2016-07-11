@@ -96,10 +96,10 @@ class Field
         return true;
     }
 
-    public function is_true($message){
+    public function is_true($condition, $message){
         $this->rules['is_true'] = [
             'override_message' => $message,
-            'parameters' => [$this->value],
+            'parameters' => [$condition],
             'lang_key' => null
         ];
 
