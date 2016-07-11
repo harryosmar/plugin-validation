@@ -10,7 +10,6 @@ return [
     'exact:array' => 'The %s field length must be exactly %d.',
     'exact:string' => 'The %s field length must be exactly %d.',
     'integer' => 'The %s field must be an integer.',
-    'matches' => 'The %s field is not matches with "%s".',
     'min:number' => 'The %s field must be at least %d.',
     'min:array' => 'The %s field length must be at least %d.',
     'min:string' => 'The %s field length must be at least %d.',

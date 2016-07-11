@@ -37,16 +37,15 @@ class ValidationTest extends BaseTest {
         $validation = new Validation();
         $validation->addField((new Field('email', 'xxx.com', 'email address'))->is_required()->is_valid_email())
             ->addField((new Field('password', 'abc', 'password'))->is_required()->min(5))
-            ->addField((new Field('confirm password', 'abx', 'password confirmation'))->is_required()->is_matches('abc'));
+            ->addField((new Field('confirm password', 'abx', 'password confirmation'))->is_required());
 
         $this->assertFalse($validation->run());
         $this->assertCount(3, $validation->getFields());
-        $this->assertCount(3, $validation->getErrors());
+        $this->assertCount(2, $validation->getErrors());
 
         $this->assertEquals([
             'email' => 'The email address field must be a valid email address.',
-            'password' => 'The password field length must be at least 5.',
-            'confirm password' => 'The password confirmation field is not matches with "abc".',
+            'password' => 'The password field length must be at least 5.'
         ], $validation->getErrors());
     }
 
@@ -55,7 +54,7 @@ class ValidationTest extends BaseTest {
 
         $validation->addField((new Field('email', 'xxx.com'))->is_required('required')->is_valid_email('must be a valid email'))
             ->addField((new Field('password', 'abc'))->is_required('required')->min(5, "min length 5"))
-            ->addField((new Field('confirm password', 'abx'))->is_required('required')->is_matches('abc', 'confirm password must match with password'));
+            ->addField((new Field('confirm password', 'abx'))->is_required('required'));
 
 
         $this->assertFalse($validation->run(true));
@@ -63,6 +62,18 @@ class ValidationTest extends BaseTest {
         $this->assertCount(1, $validation->getErrors());
         $this->assertEquals([
             'email' => 'must be a valid email'
+        ], $validation->getErrors());
+    }
+
+    public function test_lang_id(){
+        $validation = new Validation('id');
+        $validation->addField((new Field('email', 'xxx.com'))->is_required()->is_valid_email());
+
+        $this->assertFalse($validation->run());
+        $this->assertCount(1, $validation->getFields());
+        $this->assertCount(1, $validation->getErrors());
+        $this->assertEquals([
+            'email' => 'Kolom email harus berisi alamat email yang valid.'
         ], $validation->getErrors());
     }
 

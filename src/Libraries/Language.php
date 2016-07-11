@@ -24,7 +24,7 @@ class Language{
     }
 
     public function getMessage($key = null, $lang){
-        return isset($this->langs[$lang][$key]) ? $this->langs[$lang][$key] : null;
+        return $this->langs[$lang][$key];
     }
 
 }

@@ -9,10 +9,9 @@ class Field
 {
     private $field, $value, $label, $error, $lang;
 
-
     private $rules = [];
 
-    private $numeric_rules = ['numeric', 'integer', 'decimal'];
+    private $numeric_rules = ['is_number', 'is_integer', 'is_decimal'];
 
     public function __construct($field, $value, $label = null, $lang = 'en'){
         $this->field = $field;
@@ -21,9 +20,28 @@ class Field
         $this->lang = $lang;
     }
 
+
+    private function hasNumericRules(){
+        foreach($this->rules as $rule_name => $rule){
+            if(in_array($rule_name, $this->numeric_rules)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function getFieldErrorMessage($lang_key, $args){
+        return vsprintf(Language::getInstance()->getMessage($lang_key, $this->lang), $args);
+    }
+
     public function setLanguage($lang){
         $this->lang = $lang;
         return $this;
+    }
+
+    public function getLanguage(){
+        return $this->lang;
     }
 
     public function setField($field){
@@ -57,241 +75,190 @@ class Field
         return $this->error;
     }
 
+
     public function isValid(){
         return !$this->error ? true : false;
     }
 
-    public function is_true($condition, $message){
-        $this->rules[] = 'true';
+    public function runValidation(){
+        foreach($this->rules as $rule_name => $rule){
+            if(!empty($this->error)){
+                return false;
+            }
 
-        if( !$condition ){
-            $this->error = $message;
+            if(!call_user_func_array('\\PluginSimpleValidate\\helper\\Validate\\' . $rule_name, $rule['parameters'])){
+                $this->error = $rule['override_message'] !== null ? $rule['override_message'] : $this->getFieldErrorMessage($rule['lang_key'], $rule['default_message_args']);
+                return false;
+            }
+
         }
+
+        return true;
+    }
+
+    public function is_true($message){
+        $this->rules['is_true'] = [
+            'override_message' => $message,
+            'parameters' => [$this->value],
+            'lang_key' => null
+        ];
 
         return $this;
     }
 
     public function is_required($message = null)
     {
-        $this->rules[] = 'required';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        $value = preg_replace('/^\s+|\s+$/', '', $this->value);
-
-        if( Validate\is_empty($value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('required', $this->lang), $this->label);
-        }
-
-        return $this;
-    }
-
-    public function is_matches($str, $message = null){
-        $this->rules[] = 'matches';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if($str !== $this->value){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('matches', $this->lang), $this->label, $str);
-        }
+        $this->rules['is_required'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'required'
+        ];
 
         return $this;
     }
 
     public function is_numeric($message = null){
-        $this->rules[] = 'numeric';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! is_numeric($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('numeric', $this->lang), $this->label);
-        }
+        $this->rules['is_number'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'numeric'
+        ];
 
         return $this;
     }
 
     public function is_valid_email($message = null){
-        $this->rules[] = 'valid_email';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_valid_email($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('email', $this->lang), $this->label);
-        }
+        $this->rules['is_valid_email'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'email'
+        ];
 
         return $this;
     }
 
     public function is_alpha($message = null)
     {
-        $this->rules[] = 'alpha';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_alpha($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha', $this->lang), $this->label);
-        }
+        $this->rules['is_alpha'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'alpha'
+        ];
 
         return $this;
     }
 
     public function is_alpha_numeric($message = null)
     {
-        $this->rules[] = 'alpha_numeric';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_alpha_numeric($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('alpha_numeric', $this->lang), $this->label);
-        }
+        $this->rules['is_alpha_numeric'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'alpha_numeric'
+        ];
 
         return $this;
     }
 
     public function is_decimal($message = null)
     {
-        $this->rules[] = 'decimal';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_decimal($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('decimal', $this->lang), $this->label);
-        }
+        $this->rules['is_decimal'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'decimal'
+        ];
 
         return $this;
     }
 
     public function is_integer($message = null)
     {
-        $this->rules[] = 'integer';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! is_integer($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('integer', $this->lang), $this->label);
-        }
+        $this->rules['is_integer'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'integer'
+        ];
 
         return $this;
     }
 
     public function is_natural($message = null)
     {
-        $this->rules[] = 'natural';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_natural($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural', $this->lang), $this->label);
-        }
+        $this->rules['is_natural'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'natural'
+        ];
 
         return $this;
     }
 
     public function is_natural_no_zero($message = null)
     {
-        $this->rules[] = 'natural_no_zero';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if( ! Validate\is_natural_no_zero($this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('natural_no_zero', $this->lang), $this->label);
-        }
+        $this->rules['is_natural_no_zero'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label],
+            'parameters' => [$this->value],
+            'lang_key' => 'natural_no_zero'
+        ];
 
         return $this;
     }
 
-    private function hasNumericRules(){
-        foreach($this->rules as $rule){
-            if(in_array($rule, $this->numeric_rules)){
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     public function min($min, $message = null)
     {
-        $this->rules[] = 'min';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
         $hasNumericRules = $this->hasNumericRules();
-
-        if(!Validate\min_length($this->value, $min, $hasNumericRules)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('min:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $min);
-        }
+        $this->rules['min_length'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label, $min],
+            'parameters' => [$this->value, $min, $hasNumericRules],
+            'lang_key' => 'min:' . Validate\get_type($this->value, $hasNumericRules)
+        ];
 
         return $this;
     }
 
     public function max($max, $message = null)
     {
-        $this->rules[] = 'max';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
         $hasNumericRules = $this->hasNumericRules();
-
-        if(!Validate\max_length($this->value, $max, $hasNumericRules)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('max:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $max);
-        }
+        $this->rules['max_length'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label, $max],
+            'parameters' => [$this->value, $max, $hasNumericRules],
+            'lang_key' => 'max:' . Validate\get_type($this->value, $hasNumericRules)
+        ];
 
         return $this;
     }
 
     public function exact_length($length, $message = null)
     {
-        $this->rules[] = 'exact';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
         $hasNumericRules = $this->hasNumericRules();
-
-        if(!Validate\exact_length($this->value, $length, $hasNumericRules)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('exact:' . Validate\get_type($this->value, $hasNumericRules), $this->lang), $this->label, $length);
-        }
+        $this->rules['exact_length'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label, $length],
+            'parameters' => [$this->value, $length, $hasNumericRules],
+            'lang_key' => 'exact:' . Validate\get_type($this->value, $hasNumericRules)
+        ];
 
         return $this;
     }
 
     public function equal($expected, $message = null)
     {
-        $this->rules[] = 'equal';
-
-        if(!empty($this->error)){
-            return $this;
-        }
-
-        if(!Validate\equal($expected, $this->value)){
-            $this->error = $message ? $message : sprintf(Language::getInstance()->getMessage('equal', $this->lang), $this->label, $expected);
-        }
+        $this->rules['equal'] = [
+            'override_message' => $message,
+            'default_message_args' => [$this->label, $expected],
+            'parameters' => [$expected, $this->value],
+            'lang_key' => 'equal'
+        ];
 
         return $this;
     }

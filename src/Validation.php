@@ -29,7 +29,9 @@ class Validation
             $this->fields = [];
         }
 
+        // set field language
         $field->setLanguage($this->lang);
+
         $this->fields[$field->getField()] = $field;
         return $this;
     }
@@ -41,7 +43,7 @@ class Validation
     public function run($break_when_error = false){
         /** @var Field $field */
         foreach($this->fields as $field){
-            if(!$field->isValid()){
+            if(!$field->runValidation()){
                 $this->errors[$field->getField()] = $field->getErrorMessage();
                 if($break_when_error){
                     break;
