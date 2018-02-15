@@ -1,6 +1,9 @@
 # Validation
 Composer plugin for validation purpose, contains set of validation rules.
 
+[![Latest Version](https://img.shields.io/github/release/harryosmar/plugin-validation.svg?style=flat-square)](https://github.com/harryosmar/plugin-validation/releases)
+[![Build Status](https://travis-ci.org/harryosmar/plugin-validation.svg?branch=master)](https://travis-ci.org/harryosmar/plugin-validation)
+
 ## Installation
 
 Add this composer.json file
@@ -14,7 +17,7 @@ Add this composer.json file
         }
     ],
     "require": {
-        "harryosmar/plugin-validation": "1.0.*"
+        "harryosmar/plugin-validation": "^2.0"
     }
 }
 ```
