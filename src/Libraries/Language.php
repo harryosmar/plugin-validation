@@ -2,29 +2,46 @@
 
 namespace PluginSimpleValidate\Libraries;
 
-class Language{
-    /** @var self */
-    private static $instance;
+class Language
+{
+    /**
+     * @var string
+     */
+    private $lang;
 
+    /**
+     * @var array
+     */
+    private $translation;
 
-    private function __construct()
+    /**
+     * Language constructor.
+     * @param string $lang
+     */
+    public function __construct(string $lang)
     {
-        $this->langs = [
-            'en' => include_once implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'lang', 'en', 'validation.php']),
-            'id' => include_once implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'lang', 'id', 'validation.php'])
-        ];
+        $this->lang = $lang;
+        $this->translation = include implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'lang', $this->lang . '.php']);
     }
 
-    public static function getInstance(){
-        if(is_null(self::$instance)){
-            self::$instance = new Language();
+    /**
+     * @return string
+     */
+    public function getLang(): string
+    {
+        return $this->lang;
+    }
+
+    /**
+     * @param string $key
+     * @return array|string
+     */
+    public function getTranslation(string $key = '')
+    {
+        if (empty($key)) {
+            return $this->translation;
         }
 
-        return self::$instance;
+        return isset($this->translation[$key]) ? $this->translation[$key] : $key;
     }
-
-    public function getMessage($key = null, $lang){
-        return $this->langs[$lang][$key];
-    }
-
 }

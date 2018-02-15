@@ -11,32 +11,27 @@
             "homepage": "https://github.com/harryosmar"
         }
     ],
-    "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:harryosmar/plugin-validation"
-        }
-    ],
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
-        "mockery/mockery": "^0.9.4"
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~5.7"
     },
     "autoload": {
         "psr-4": {
             "PluginSimpleValidate\\": "src/"
         },
         "files": [
-            "src/functions_include.php"
+            "src/helper/Validate.php",
+            "src/helper/Cleaner.php"
         ]
     },
     "autoload-dev": {
-        "files": [
-            "tests/plugin-validate/BaseTest.php"
-        ]
+        "psr-4": {
+            "PluginSimpleValidate\\Tests\\": "tests/"
+        }
     },
     "extra": {
         "branch-alias": {

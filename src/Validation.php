@@ -2,21 +2,35 @@
 
 namespace PluginSimpleValidate;
 
-use PluginSimpleValidate\Libraries\Config;
+use PluginSimpleValidate\Libraries\Language;
 
 class Validation
 {
+    /**
+     * @var array
+     * array of Field
+     */
+    private $fields;
 
-    private $fields = [];
+    /**
+     * @var array
+     */
+    private $errors;
 
-    private $errors = [];
+    /**
+     * @var Language
+     */
+    private $language;
 
-    public function __construct($lang = null)
+    /**
+     * Validation constructor.
+     * @param Language $language
+     */
+    public function __construct(Language $language)
     {
-        $lang = $lang === null ? Config::getInstance()->getDefaultLanguages() : $lang;
-        if(Config::getInstance()->isValidLanguage($lang)){
-            $this->lang = $lang;
-        }
+        $this->language = $language;
+        $this->fields = [];
+        $this->errors = [];
     }
 
     /**
@@ -24,15 +38,13 @@ class Validation
      * @param bool $reinitialize
      * @return $this
      */
-    public function addField(Field $field, $reinitialize = false){
-        if($reinitialize === true){
-            $this->fields = [];
+    public function addField(Field $field, $reinitialize = false)
+    {
+        if ($reinitialize === true) {
+            $this->reinitializeFields();
         }
 
-        // set field language
-        $field->setLanguage($this->lang);
-
-        $this->fields[$field->getField()] = $field;
+        $this->fields[$field->getName()] = $field;
         return $this;
     }
 
@@ -40,12 +52,12 @@ class Validation
      * @param bool $break_when_error
      * @return bool
      */
-    public function run($break_when_error = false){
+    public function run($break_when_error = false) {
         /** @var Field $field */
-        foreach($this->fields as $field){
-            if(!$field->runValidation()){
-                $this->errors[$field->getField()] = $field->getErrorMessage();
-                if($break_when_error){
+        foreach ($this->fields as $field) {
+            if (!$field->isValid($this->language)) {
+                $this->errors[$field->getName()] = $field->getError();
+                if ($break_when_error) {
                     break;
                 }
             }
@@ -54,17 +66,34 @@ class Validation
         return empty($this->errors) ? true : false;
     }
 
-
-    public function getErrors(){
+    /**
+     * @return array
+     */
+    public function getErrors()
+    {
         return $this->errors;
     }
 
     /**
-     * @return array
+     * @param string $fieldName
+     * @return array|Field|null
      */
-    public function getFields()
+    public function getFields(string $fieldName = '')
     {
-        return $this->fields;
+        if (empty($fieldName)) {
+            return $this->fields;
+        }
+
+        return isset($this->fields[$fieldName]) ? $this->fields[$fieldName] : null;
+    }
+
+    /**
+     * @return $this
+     */
+    private function reinitializeFields()
+    {
+        $this->fields = [];
+        return  $this;
     }
 
 }
