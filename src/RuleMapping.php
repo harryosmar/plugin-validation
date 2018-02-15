@@ -10,9 +10,9 @@ namespace PluginSimpleValidate;
 
 use PluginSimpleValidate\Exception\RuleNotExist;
 
-class RuleMapping
+class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMapping
 {
-    private static $list = [
+    protected static $list = [
         'numeric' => [
             'validation_method' => 'is_number',
             'lang_key' => 'alpha'
@@ -56,7 +56,7 @@ class RuleMapping
      * @return Rule
      * @throws RuleNotExist
      */
-    public static function getRule(string $key)
+    public static function getRule(string $key) : Rule
     {
         if (!isset(static::$list[$key])) {
             throw new RuleNotExist('Rule does not exist');

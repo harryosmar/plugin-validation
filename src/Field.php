@@ -4,7 +4,7 @@ namespace PluginSimpleValidate;
 
 use PluginSimpleValidate\Libraries\Language;
 
-class Field
+class Field implements \PluginSimpleValidate\Contracts\Field
 {
     /**
      * @var string
@@ -35,9 +35,9 @@ class Field
     /**
      * Field constructor.
      * @param string $name
-     * @param string $value
+     * @param mixed $value
      */
-    public function __construct(string $name, string $value)
+    public function __construct(string $name, $value)
     {
         $this->name = $name;
         $this->value = $value;
@@ -57,7 +57,7 @@ class Field
      * @param Language $language
      * @return bool
      */
-    public function isValid(Language $language)
+    public function isValid(Language $language) : bool
     {
         /** @var Rule $rule */
         foreach ($this->rules as $ruleName => $rule) {
@@ -92,9 +92,9 @@ class Field
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getValue(): string
+    public function getValue()
     {
         return $this->value;
     }

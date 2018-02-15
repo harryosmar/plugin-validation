@@ -8,7 +8,7 @@
 
 namespace PluginSimpleValidate;
 
-class Rule
+class Rule implements \PluginSimpleValidate\Contracts\Rule
 {
     /**
      * @var string
@@ -20,16 +20,10 @@ class Rule
      */
     private $langKey;
 
-    /**
-     * @var bool
-     */
-    private $status;
-
     public function __construct(string $validationMethod, string $langKey)
     {
         $this->validationMethod = $validationMethod;
         $this->langKey = $langKey;
-        $this->status = false;
     }
 
     /**
@@ -46,13 +40,5 @@ class Rule
     public function getLangKey(): string
     {
         return $this->langKey;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isStatus(): bool
-    {
-        return $this->status;
     }
 }

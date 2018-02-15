@@ -4,7 +4,7 @@ namespace PluginSimpleValidate;
 
 use PluginSimpleValidate\Libraries\Language;
 
-class Validation
+class Validation implements \PluginSimpleValidate\Contracts\Validation
 {
     /**
      * @var array
@@ -34,16 +34,11 @@ class Validation
     }
 
     /**
-     * @param Field $field
-     * @param bool $reinitialize
+     * @param \PluginSimpleValidate\Contracts\Field $field
      * @return $this
      */
-    public function addField(Field $field, $reinitialize = false)
+    public function addField(\PluginSimpleValidate\Contracts\Field $field)
     {
-        if ($reinitialize === true) {
-            $this->reinitializeFields();
-        }
-
         $this->fields[$field->getName()] = $field;
         return $this;
     }
@@ -52,7 +47,8 @@ class Validation
      * @param bool $break_when_error
      * @return bool
      */
-    public function run($break_when_error = false) {
+    public function run($break_when_error = false) : bool
+    {
         /** @var Field $field */
         foreach ($this->fields as $field) {
             if (!$field->isValid($this->language)) {
@@ -86,14 +82,4 @@ class Validation
 
         return isset($this->fields[$fieldName]) ? $this->fields[$fieldName] : null;
     }
-
-    /**
-     * @return $this
-     */
-    private function reinitializeFields()
-    {
-        $this->fields = [];
-        return  $this;
-    }
-
 }
