@@ -53,10 +53,10 @@ class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMapping
 
     /**
      * @param string $key
-     * @return Rule
+     * @return \PluginSimpleValidate\Contracts\Rule
      * @throws RuleNotExist
      */
-    public static function getRule(string $key) : Rule
+    public static function getRule(string $key) : \PluginSimpleValidate\Contracts\Rule
     {
         if (!isset(static::$list[$key])) {
             throw new RuleNotExist('Rule does not exist');

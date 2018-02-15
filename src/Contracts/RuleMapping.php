@@ -8,8 +8,6 @@
 
 namespace PluginSimpleValidate\Contracts;
 
-use PluginSimpleValidate\Rule;
-
 interface RuleMapping
 {
     /**

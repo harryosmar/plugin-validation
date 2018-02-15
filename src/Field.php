@@ -59,7 +59,7 @@ class Field implements \PluginSimpleValidate\Contracts\Field
      */
     public function isValid(Language $language) : bool
     {
-        /** @var Rule $rule */
+        /** @var \PluginSimpleValidate\Contracts\Rule $rule */
         foreach ($this->rules as $ruleName => $rule) {
             if (!call_user_func_array(
                 '\\PluginSimpleValidate\\helper\\Validate\\' . $rule->getValidationMethod(),
