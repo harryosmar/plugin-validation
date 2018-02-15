@@ -33,9 +33,7 @@
             "PluginSimpleValidate\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "branch-alias": {
-
-        }
+    "scripts": {
+        "test": "./vendor/bin/phpunit -c phpunit.xml --coverage-text --coverage-clover=coverage.clover --debug"
     }
 }
