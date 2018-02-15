@@ -3,6 +3,8 @@ Composer plugin for validation purpose, contains set of validation rules.
 
 [![Latest Version](https://img.shields.io/github/release/harryosmar/plugin-validation.svg?style=flat-square)](https://github.com/harryosmar/plugin-validation/releases)
 [![Build Status](https://travis-ci.org/harryosmar/plugin-validation.svg?branch=master)](https://travis-ci.org/harryosmar/plugin-validation)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/?branch=master)
 
 ## Installation
 
