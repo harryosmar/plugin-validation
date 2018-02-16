@@ -12,7 +12,8 @@ interface RuleMapping
 {
     /**
      * @param string $key
+     * @param array $args
      * @return Rule
      */
-    public static function getRule(string $key) : Rule;
+    public static function getRule(string $key, array $args = []) : Rule;
 }

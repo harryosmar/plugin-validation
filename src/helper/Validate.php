@@ -4,6 +4,8 @@ namespace PluginSimpleValidate\helper\Validate;
 
 use function PluginSimpleValidate\helper\Cleaner\trim_doubled_space;
 
+const VAR_LIMIT = 'limit';
+
 if (! function_exists('is_true')) {
     function is_true($value)
     {
@@ -85,5 +87,33 @@ if (! function_exists('is_equal')) {
     function is_equal($expected, $actual)
     {
         return $expected === $actual;
+    }
+}
+
+if (! function_exists('less_than')) {
+    function less_than($value, array $args)
+    {
+        return $value < $args[VAR_LIMIT];
+    }
+}
+
+if (! function_exists('greater_than')) {
+    function greater_than($value, array $args)
+    {
+        return $value > $args[VAR_LIMIT];
+    }
+}
+
+if (! function_exists('less_or_equal_than')) {
+    function less_or_equal_than($value, array $args)
+    {
+        return $value <= $args[VAR_LIMIT];
+    }
+}
+
+if (! function_exists('greater_or_equal_than')) {
+    function greater_or_equal_than($value, array $args)
+    {
+        return $value >= $args[VAR_LIMIT];
     }
 }

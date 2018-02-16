@@ -18,22 +18,28 @@ class FieldTest extends Base
         $this->language = new Language('id');
     }
 
-    public function test_construct()
-    {
-        $field = new Field('name', 'value');
-        $this->assertEquals('name', $field->getName());
-        $this->assertEquals('value', $field->getValue());
-    }
-
-    public function test_is_required(){
-        $field = (new Field('field', ''))->required();
+//    public function test_construct()
+//    {
+//        $field = new Field('name', 'value');
+//        $this->assertEquals('name', $field->getName());
+//        $this->assertEquals('value', $field->getValue());
+//    }
+//
+//    public function test_is_required(){
+//        $field = (new Field('username', ''))->required();
+//        $this->assertFalse($field->isValid($this->language));
+//        $this->assertEquals(['harus diisi.'], $field->getErrors());
+//    }
+//
+    public function test_is_less_than(){
+        $field = (new Field('score', 90.90))->lessThan(90.87);
         $this->assertFalse($field->isValid($this->language));
         $this->assertEquals(['harus diisi.'], $field->getErrors());
     }
 
-    public function test_field_multi_rules(){
-        $field = (new Field('email', ''))->required()->validEmail();
-        $this->assertFalse($field->isValid($this->language));
-        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
-    }
+//    public function test_field_multi_rules(){
+//        $field = (new Field('email', ''))->required()->validEmail();
+//        $this->assertFalse($field->isValid($this->language));
+//        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
+//    }
 }

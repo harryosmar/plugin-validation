@@ -13,12 +13,6 @@ use PluginSimpleValidate\Libraries\Language;
 interface Field
 {
     /**
-     * @param string $rulesMethod
-     * @return mixed
-     */
-    public function addRules(string $rulesMethod);
-
-    /**
      * @param Language $language
      * @param bool $break_when_error
      * @return bool

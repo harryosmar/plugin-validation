@@ -30,4 +30,9 @@ interface Rule
      * @return bool
      */
     public function isValid(Language $language, $value) : bool;
+
+    /**
+     * @return string
+     */
+    public function getError(): string;
 }

@@ -2,6 +2,7 @@
 
 namespace PluginSimpleValidate;
 
+use const PluginSimpleValidate\helper\Validate\VAR_LIMIT;
 use PluginSimpleValidate\Libraries\Language;
 
 class Field implements \PluginSimpleValidate\Contracts\Field
@@ -46,11 +47,12 @@ class Field implements \PluginSimpleValidate\Contracts\Field
 
     /**
      * @param string $rulesMethod
+     * @param array $args
      * @return $this
      */
-    public function addRules(string $rulesMethod)
+    protected function addRules(string $rulesMethod, array $args = [])
     {
-        $this->rules[$rulesMethod] = RuleMapping::getRule($rulesMethod);
+        $this->rules[$rulesMethod] = RuleMapping::getRule($rulesMethod, $args);
         return $this;
     }
 
@@ -65,9 +67,7 @@ class Field implements \PluginSimpleValidate\Contracts\Field
         foreach ($this->rules as $ruleName => $rule) {
             if (!$rule->isValid($language, $this->value)) {
                 $this->status = false;
-                $this->errors[] = $language->getTranslation(
-                    $rule->getLangKey()
-                );
+                $this->errors[] = $rule->getError();
 
                 /**
                  * break when there is any rule error
@@ -132,6 +132,16 @@ class Field implements \PluginSimpleValidate\Contracts\Field
     public function validEmail()
     {
         $this->addRules('valid_email');
+        return $this;
+    }
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lessThan($limit)
+    {
+        $this->addRules('less_than', [VAR_LIMIT => $limit]);
         return $this;
     }
 }

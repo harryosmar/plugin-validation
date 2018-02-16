@@ -32,11 +32,23 @@ class Rule implements \PluginSimpleValidate\Contracts\Rule
      */
     private $error;
 
-    public function __construct(string $validationMethod, string $langKey)
+    /**
+     * @var array
+     */
+    private $args;
+
+    /**
+     * Rule constructor.
+     * @param string $validationMethod
+     * @param string $langKey
+     * @param array $args
+     */
+    public function __construct(string $validationMethod, string $langKey, $args = [])
     {
         $this->validationMethod = $validationMethod;
         $this->langKey = $langKey;
         $this->status = false;
+        $this->args = $args;
         $this->error = '';
     }
 
@@ -74,18 +86,31 @@ class Rule implements \PluginSimpleValidate\Contracts\Rule
         if (!call_user_func_array(
             '\\PluginSimpleValidate\\helper\\Validate\\' . $this->getValidationMethod(),
             [
-                $value
+                $value,
+                $this->args
             ]
         )) {
             $this->status = false;
 
-            $this->error = $language->getTranslation(
-                $this->getLangKey()
+            $this->error = vsprintf(
+                $language->getTranslation(
+                    $this->getLangKey()
+                ),
+                $this->args
             );
+
         } else {
             $this->status = true;
         }
 
         return $this->status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getError(): string
+    {
+        return $this->error;
     }
 }
