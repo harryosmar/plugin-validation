@@ -2,7 +2,6 @@
 
 namespace PluginSimpleValidate;
 
-use const PluginSimpleValidate\helper\Validate\VAR_IS_TRUE;
 use const PluginSimpleValidate\helper\Validate\VAR_LIMIT;
 use const PluginSimpleValidate\helper\Validate\VAR_LOWER_LIMIT;
 use const PluginSimpleValidate\helper\Validate\VAR_MATCH;
