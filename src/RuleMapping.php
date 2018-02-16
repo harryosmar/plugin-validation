@@ -65,6 +65,14 @@ class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMapping
             'validation_method' => 'greater_or_equal_than',
             'lang_key' => 'greater_or_equal_than'
         ],
+        'between' => [
+            'validation_method' => 'between',
+            'lang_key' => 'between'
+        ],
+        'between_or_equal' => [
+            'validation_method' => 'between_or_equal',
+            'lang_key' => 'between_or_equal'
+        ],
     ];
 
     /**

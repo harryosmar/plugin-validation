@@ -6,6 +6,13 @@ use function PluginSimpleValidate\helper\Cleaner\trim_doubled_space;
 
 const VAR_LIMIT = 'limit';
 
+const VAR_MATCH = 'match';
+
+const VAR_LOWER_LIMIT = 'lower';
+
+const VAR_UPPER_LIMIT = 'upper';
+
+
 if (! function_exists('is_true')) {
     function is_true($value)
     {
@@ -84,9 +91,9 @@ if (! function_exists('is_natural_no_zero')) {
 }
 
 if (! function_exists('is_equal')) {
-    function is_equal($expected, $actual)
+    function is_equal($value, array $args)
     {
-        return $expected === $actual;
+        return $value === $args[VAR_MATCH];
     }
 }
 
@@ -115,5 +122,19 @@ if (! function_exists('greater_or_equal_than')) {
     function greater_or_equal_than($value, array $args)
     {
         return $value >= $args[VAR_LIMIT];
+    }
+}
+
+if (! function_exists('between')) {
+    function between($value, array $args)
+    {
+        return $value < $args[VAR_UPPER_LIMIT] && $value > $args[VAR_LOWER_LIMIT];
+    }
+}
+
+if (! function_exists('between_or_equal')) {
+    function between_or_equal($value, array $args)
+    {
+        return $value <= $args[VAR_UPPER_LIMIT] && $value >= $args[VAR_LOWER_LIMIT];
     }
 }

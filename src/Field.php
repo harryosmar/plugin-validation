@@ -3,9 +3,12 @@
 namespace PluginSimpleValidate;
 
 use const PluginSimpleValidate\helper\Validate\VAR_LIMIT;
+use const PluginSimpleValidate\helper\Validate\VAR_LOWER_LIMIT;
+use const PluginSimpleValidate\helper\Validate\VAR_MATCH;
+use const PluginSimpleValidate\helper\Validate\VAR_UPPER_LIMIT;
 use PluginSimpleValidate\Libraries\Language;
 
-class Field implements \PluginSimpleValidate\Contracts\Field
+class Field extends \PluginSimpleValidate\BaseAbstract\Field implements \PluginSimpleValidate\Contracts\Field
 {
     /**
      * @var string
@@ -136,12 +139,33 @@ class Field implements \PluginSimpleValidate\Contracts\Field
     }
 
     /**
+     * @param int|float|double|string $match
+     * @return $this
+     */
+    public function equal($match)
+    {
+        $this->addRules('equal', [VAR_MATCH => $match]);
+        return $this;
+    }
+
+    /**
      * @param int|float|double $limit
      * @return $this
      */
     public function lessThan($limit)
     {
         $this->addRules('less_than', [VAR_LIMIT => $limit]);
+        return $this;
+    }
+
+    /**
+     * @param int|float|double $lower
+     * @param int|float|double $upper
+     * @return $this
+     */
+    public function between($lower, $upper)
+    {
+        $this->addRules('between', [VAR_LOWER_LIMIT => $lower, VAR_UPPER_LIMIT => $upper]);
         return $this;
     }
 }

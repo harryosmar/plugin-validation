@@ -18,28 +18,40 @@ class FieldTest extends Base
         $this->language = new Language('id');
     }
 
-//    public function test_construct()
-//    {
-//        $field = new Field('name', 'value');
-//        $this->assertEquals('name', $field->getName());
-//        $this->assertEquals('value', $field->getValue());
-//    }
-//
-//    public function test_is_required(){
-//        $field = (new Field('username', ''))->required();
-//        $this->assertFalse($field->isValid($this->language));
-//        $this->assertEquals(['harus diisi.'], $field->getErrors());
-//    }
-//
-    public function test_is_less_than(){
-        $field = (new Field('score', 90.90))->lessThan(90.87);
+    public function test_construct()
+    {
+        $field = new Field('name', 'value');
+        $this->assertEquals('name', $field->getName());
+        $this->assertEquals('value', $field->getValue());
+    }
+
+    public function test_is_required(){
+        $field = (new Field('username', ''))->required();
         $this->assertFalse($field->isValid($this->language));
         $this->assertEquals(['harus diisi.'], $field->getErrors());
     }
 
-//    public function test_field_multi_rules(){
-//        $field = (new Field('email', ''))->required()->validEmail();
-//        $this->assertFalse($field->isValid($this->language));
-//        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
-//    }
+    public function test_is_less_than(){
+        $field = (new Field('score', 90.90))->lessThan(90.87);
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['harus lebih kecil dari 90.87.'], $field->getErrors());
+    }
+
+    public function test_equal(){
+        $field = (new Field('confirm_password', 'newpassword'))->equal('oldpassword');
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['harus memiliki nilai yang sama dengan "oldpassword".'], $field->getErrors());
+    }
+
+    public function test_between(){
+        $field = (new Field('grade_b', 86))->between(79, 86);
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['harus lebih besar dari 79 dan lebih kecil dari 86.'], $field->getErrors());
+    }
+
+    public function test_field_multi_rules(){
+        $field = (new Field('email', ''))->required()->validEmail();
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
+    }
 }

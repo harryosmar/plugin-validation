@@ -17,8 +17,9 @@ return [
     'natural_no_zero' => 'harus berisi angka lebih besar dari nol.',
     'numeric' => 'harus berisi angka.',
     'required' => 'harus diisi.',
-    'less_than' => 'harus lebih kecil dari %s',
-    'greater_than' => 'harus lebih besar dari %s',
-    'less_or_equal_than' => 'harus lebih kecil atau sama dengan %s',
-    'greater_or_equal_than' => 'harus lebih besar atau sama dengan %s',
+    'less_than' => 'harus lebih kecil dari %s.',
+    'greater_than' => 'harus lebih besar dari %s.',
+    'less_or_equal_than' => 'harus lebih kecil atau sama dengan %s.',
+    'greater_or_equal_than' => 'harus lebih besar atau sama dengan %s.',
+    'between' => 'harus lebih besar dari %s dan lebih kecil dari %s.'
 ];
