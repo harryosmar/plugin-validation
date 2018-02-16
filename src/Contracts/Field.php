@@ -20,9 +20,10 @@ interface Field
 
     /**
      * @param Language $language
+     * @param bool $break_when_error
      * @return bool
      */
-    public function isValid(Language $language) : bool;
+    public function isValid(Language $language, $break_when_error = false) : bool;
 
     /**
      * @return string
@@ -42,5 +43,5 @@ interface Field
     /**
      * @return array
      */
-    public function getError();
+    public function getErrors();
 }

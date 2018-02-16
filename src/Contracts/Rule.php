@@ -8,6 +8,8 @@
 
 namespace PluginSimpleValidate\Contracts;
 
+use PluginSimpleValidate\Libraries\Language;
+
 interface Rule
 {
     public function getValidationMethod(): string;
@@ -16,4 +18,16 @@ interface Rule
      * @return string
      */
     public function getLangKey(): string;
+
+    /**
+     * @return bool
+     */
+    public function getStatus(): bool;
+
+    /**
+     * @param Language $language
+     * @param $value
+     * @return bool
+     */
+    public function isValid(Language $language, $value) : bool;
 }

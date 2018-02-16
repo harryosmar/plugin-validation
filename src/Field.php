@@ -19,7 +19,7 @@ class Field implements \PluginSimpleValidate\Contracts\Field
     /**
      * @var array
      */
-    private $error;
+    private $errors;
 
     /**
      * @var array
@@ -41,6 +41,7 @@ class Field implements \PluginSimpleValidate\Contracts\Field
     {
         $this->name = $name;
         $this->value = $value;
+        $this->errors = [];
     }
 
     /**
@@ -55,28 +56,29 @@ class Field implements \PluginSimpleValidate\Contracts\Field
 
     /**
      * @param Language $language
+     * @param bool $break_when_error
      * @return bool
      */
-    public function isValid(Language $language) : bool
+    public function isValid(Language $language, $break_when_error = false) : bool
     {
         /** @var \PluginSimpleValidate\Contracts\Rule $rule */
         foreach ($this->rules as $ruleName => $rule) {
-            if (!call_user_func_array(
-                '\\PluginSimpleValidate\\helper\\Validate\\' . $rule->getValidationMethod(),
-                    [
-                        $this->value
-                    ]
-            )) {
+            if (!$rule->isValid($language, $this->value)) {
                 $this->status = false;
-
-                $this->error[] = $language->getTranslation(
+                $this->errors[] = $language->getTranslation(
                     $rule->getLangKey()
                 );
+
+                /**
+                 * break when there is any rule error
+                 */
+                if ($break_when_error === true) {
+                    break;
+                }
             }
         }
 
-
-        if ($this->status !== false) {
+        if (empty($this->errors)) {
             $this->status = true;
         }
 
@@ -110,9 +112,9 @@ class Field implements \PluginSimpleValidate\Contracts\Field
     /**
      * @return array
      */
-    public function getError(): array
+    public function getErrors(): array
     {
-        return $this->error;
+        return $this->errors;
     }
 
     /**

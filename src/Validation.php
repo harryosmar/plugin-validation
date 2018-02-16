@@ -23,6 +23,11 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
     private $language;
 
     /**
+     * @var bool
+     */
+    private $status;
+
+    /**
      * Validation constructor.
      * @param Language $language
      */
@@ -31,6 +36,7 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
         $this->language = $language;
         $this->fields = [];
         $this->errors = [];
+        $this->status = false;
     }
 
     /**
@@ -52,14 +58,23 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
         /** @var Field $field */
         foreach ($this->fields as $field) {
             if (!$field->isValid($this->language)) {
-                $this->errors[$field->getName()] = $field->getError();
+                $this->status = false;
+                $this->errors[$field->getName()] = $field->getErrors();
+
+                /**
+                 * break when there is any field error
+                 */
                 if ($break_when_error) {
                     break;
                 }
             }
         }
 
-        return empty($this->errors) ? true : false;
+        if (empty($this->errors)) {
+            $this->status = true;
+        }
+
+        return $this->status;
     }
 
     /**
@@ -81,5 +96,13 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
         }
 
         return isset($this->fields[$fieldName]) ? $this->fields[$fieldName] : null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStatus(): bool
+    {
+        return $this->status;
     }
 }

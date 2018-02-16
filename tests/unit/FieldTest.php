@@ -28,12 +28,12 @@ class FieldTest extends Base
     public function test_is_required(){
         $field = (new Field('field', ''))->required();
         $this->assertFalse($field->isValid($this->language));
-        $this->assertEquals(['harus diisi.'], $field->getError());
+        $this->assertEquals(['harus diisi.'], $field->getErrors());
     }
 
     public function test_field_multi_rules(){
         $field = (new Field('email', ''))->required()->validEmail();
         $this->assertFalse($field->isValid($this->language));
-        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getError());
+        $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
     }
 }
