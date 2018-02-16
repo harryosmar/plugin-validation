@@ -34,14 +34,10 @@ class Language
 
     /**
      * @param string $key
-     * @return array|string
+     * @return string
      */
-    public function getTranslation(string $key = '')
+    public function getTranslation(string $key)
     {
-        if (empty($key)) {
-            return $this->translation;
-        }
-
         return isset($this->translation[$key]) ? $this->translation[$key] : $key;
     }
 }
