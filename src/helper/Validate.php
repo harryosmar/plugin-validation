@@ -12,6 +12,8 @@ const VAR_LOWER_LIMIT = 'lower';
 
 const VAR_UPPER_LIMIT = 'upper';
 
+const VAR_MESSAGE = 'message';
+
 
 if (! function_exists('is_true')) {
     function is_true($value)

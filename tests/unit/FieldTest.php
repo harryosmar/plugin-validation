@@ -54,4 +54,10 @@ class FieldTest extends Base
         $this->assertFalse($field->isValid($this->language));
         $this->assertEquals(['harus diisi.', 'harus berisi alamat email yang valid.'], $field->getErrors());
     }
+
+    public function test_is_true(){
+        $field = (new Field('value', 5 < 4))->isTrue('comparison error');
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['comparison error'], $field->getErrors());
+    }
 }

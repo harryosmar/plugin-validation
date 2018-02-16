@@ -21,5 +21,6 @@ return [
     'greater_than' => 'harus lebih besar dari %s.',
     'less_or_equal_than' => 'harus lebih kecil atau sama dengan %s.',
     'greater_or_equal_than' => 'harus lebih besar atau sama dengan %s.',
-    'between' => 'harus lebih besar dari %s dan lebih kecil dari %s.'
+    'between' => 'harus lebih besar dari %s dan lebih kecil dari %s.',
+    'is_true' => '%s'
 ];

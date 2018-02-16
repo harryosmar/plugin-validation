@@ -2,9 +2,11 @@
 
 namespace PluginSimpleValidate;
 
+use const PluginSimpleValidate\helper\Validate\VAR_IS_TRUE;
 use const PluginSimpleValidate\helper\Validate\VAR_LIMIT;
 use const PluginSimpleValidate\helper\Validate\VAR_LOWER_LIMIT;
 use const PluginSimpleValidate\helper\Validate\VAR_MATCH;
+use const PluginSimpleValidate\helper\Validate\VAR_MESSAGE;
 use const PluginSimpleValidate\helper\Validate\VAR_UPPER_LIMIT;
 use PluginSimpleValidate\Libraries\Language;
 
@@ -166,6 +168,16 @@ class Field extends \PluginSimpleValidate\BaseAbstract\Field implements \PluginS
     public function between($lower, $upper)
     {
         $this->addRules('between', [VAR_LOWER_LIMIT => $lower, VAR_UPPER_LIMIT => $upper]);
+        return $this;
+    }
+
+    /**
+     * @param string $message
+     * @return $this
+     */
+    public function isTrue(string $message = '')
+    {
+        $this->addRules('is_true', [VAR_MESSAGE => $message]);
         return $this;
     }
 }
