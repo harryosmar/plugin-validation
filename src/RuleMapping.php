@@ -13,11 +13,6 @@ use PluginSimpleValidate\Exception\RuleNotExist;
 class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping
 {
     /**
-     * @var array
-     */
-    protected static $list;
-
-    /**
      * @return array
      */
     protected static function getList()
@@ -130,17 +125,15 @@ class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping
      */
     public static function getRule(string $key, array $args = []) : \PluginSimpleValidate\Contracts\Rule
     {
-        if (is_null(static::$list)) {
-            static::$list = static::getList();
-        }
+        $list = static::getList();
 
-        if (!isset(static::$list[$key])) {
+        if (!isset($list[$key])) {
             throw new RuleNotExist('Rule does not exist');
         }
 
         return new Rule(
-            static::$list[$key]['validation_method'],
-            static::$list[$key]['lang_key'],
+            $list[$key]['validation_method'],
+            $list[$key]['lang_key'],
             $args
         );
     }
