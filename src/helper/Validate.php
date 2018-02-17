@@ -4,7 +4,6 @@ namespace PluginSimpleValidate\helper\Validate;
 
 use PluginSimpleValidate\BaseAbstract\Field;
 use PluginSimpleValidate\Exception\InvalidTypeParameter;
-use function PluginSimpleValidate\helper\Cleaner\check_is_valid_type_for_length;
 use function PluginSimpleValidate\helper\Cleaner\get_length;
 use function PluginSimpleValidate\helper\Cleaner\is_valid_type_for_length;
 use function PluginSimpleValidate\helper\Cleaner\trim_doubled_space;
@@ -131,48 +130,60 @@ if (! function_exists('between_or_equal')) {
 if (! function_exists('length')) {
     function length($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) === $args[Field::VAR_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) === $args[Field::VAR_LIMIT]
+        );
     }
 }
 
 if (! function_exists('length_less_than')) {
     function length_less_than($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) < $args[Field::VAR_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) < $args[Field::VAR_LIMIT]
+        );
     }
 }
 
 if (! function_exists('length_greater_than')) {
     function length_greater_than($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) > $args[Field::VAR_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) > $args[Field::VAR_LIMIT]
+        );
     }
 }
 
 if (! function_exists('length_less_or_equal_than')) {
     function length_less_or_equal_than($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) <= $args[Field::VAR_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) <= $args[Field::VAR_LIMIT]
+        );
     }
 }
 
 if (! function_exists('length_greater_or_equal_than')) {
     function length_greater_or_equal_than($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) >= $args[Field::VAR_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) >= $args[Field::VAR_LIMIT]
+        );
     }
 }
 
 if (! function_exists('length_between')) {
     function length_between($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) < $args[Field::VAR_UPPER_LIMIT] && get_length($value) > $args[Field::VAR_LOWER_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) < $args[Field::VAR_UPPER_LIMIT] && get_length($value) > $args[Field::VAR_LOWER_LIMIT]
+        );
     }
 }
 
@@ -180,7 +191,19 @@ if (! function_exists('length_between')) {
 if (! function_exists('length_between_or_equal')) {
     function length_between_or_equal($value, array $args)
     {
-        check_is_valid_type_for_length($value);
-        return get_length($value) <= $args[Field::VAR_UPPER_LIMIT] && get_length($value) >= $args[Field::VAR_LOWER_LIMIT];
+        return run_length_rule(
+            $value,
+            get_length($value) <= $args[Field::VAR_UPPER_LIMIT] && get_length($value) >= $args[Field::VAR_LOWER_LIMIT]
+        );
+    }
+}
+
+if (! function_exists('run_length_rule')) {
+    function run_length_rule($value, $result) {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return $result;
     }
 }
