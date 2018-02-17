@@ -292,6 +292,20 @@ $field->lengthBetween(5, 10);
  */
 $field->lengthBetweenOrEqual(5, 10);
 ```
+- `is true`
+This is used for validation `custom rule logic`
+```php
+<?php
+/**
+ * @var \PluginSimpleValidate\Field $field
+ */
+$field->isTrue(someMethod());
+
+function someMethod() : bool 
+{
+    // add logic here
+}
+```
 
 ### Submitting bugs and feature requests
 Harry Osmar Sitohang - <harryosmarsitohang@gmail.com> - <https://github.com/harryosmar><br />
