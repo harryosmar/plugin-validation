@@ -49,7 +49,7 @@ $validation = new Validation($this->language);
 $emailField = (new Field('email', ''))->required()->validEmail();
 $passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->lengthGreaterThan(5);
 ```
-2. add field to `$validation` object
+2. add `fields` to `$validation` object
 ```php
 <?php
 /**
