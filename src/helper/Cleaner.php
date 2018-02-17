@@ -28,6 +28,14 @@ if (! function_exists('is_valid_type_for_length')) {
     }
 }
 
+if (! function_exists('check_is_valid_type_for_length')) {
+    function check_is_valid_type_for_length($value) {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+    }
+}
+
 if (! function_exists('get_length')) {
     function get_length($value)
     {
