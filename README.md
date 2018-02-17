@@ -293,6 +293,7 @@ $field->lengthBetween(5, 10);
 $field->lengthBetweenOrEqual(5, 10);
 ```
 - `is true`
+
 This is used for validation `custom rule logic`
 ```php
 <?php
