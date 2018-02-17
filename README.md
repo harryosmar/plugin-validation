@@ -296,10 +296,8 @@ $field->lengthBetweenOrEqual(5, 10);
 This is used for validation `custom rule logic`
 ```php
 <?php
-/**
- * @var \PluginSimpleValidate\Field $field
- */
-$field->isTrue(someMethod());
+$field = new \PluginSimpleValidate\Field('field', someMethod());
+$field->isTrue('this is for error message');
 
 function someMethod() : bool 
 {
