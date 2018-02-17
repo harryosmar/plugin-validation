@@ -91,7 +91,7 @@ if (!$status) {
     ],
 ];
 ```
-You can `break` the `validation chain` if there is any field get an error. In step 3, when calling the method `run` of `$validation` object, add parameter `true` to enable `break the chain when error occured`
+You can `break` the `validation chain` if is any `field` get an error. In `step 3`, when calling the method `run` of `$validation` object, add parameter `true` to enable `break the chain when error occured`
 ```php
 <?php 
 /**
