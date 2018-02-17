@@ -47,7 +47,7 @@ use PluginSimpleValidate\Libraries\Language;
 $language = new Language('en');
 $validation = new Validation($this->language);
 $emailField = (new Field('email', ''))->required()->validEmail();
-$passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->lengthGreaterThan(5);
+$passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->lengthGreaterThan(5); // add chain of rules to the `field`
 ```
 2. add `fields` to `$validation` object
 ```php
@@ -57,7 +57,7 @@ $passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->le
  * @var \PluginSimpleValidate\Field $emailField
  * @var \PluginSimpleValidate\Field $passwordField
  */
-$validation->addField($emailField)->addField($passwordField);
+$validation->addField($emailField)->addField($passwordField); // add chain of fields to `$validation` object
 ```
 3. call the `$validation` `run` method
 ```php
