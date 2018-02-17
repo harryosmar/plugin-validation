@@ -8,9 +8,37 @@
 
 namespace PluginSimpleValidate\helper\Cleaner;
 
+use PluginSimpleValidate\Exception\InvalidTypeParameter;
+
 if (! function_exists('trim_doubled_space')) {
     function trim_doubled_space($value)
     {
         return preg_replace('/^\s+|\s+$/', '', $value);
+    }
+}
+
+if (! function_exists('is_valid_type_for_length')) {
+    function is_valid_type_for_length($value)
+    {
+        if (is_array($value) || is_string($value)) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+if (! function_exists('get_length')) {
+    function get_length($value)
+    {
+        if (is_array($value)) {
+            return count($value);
+        }
+
+        if (is_string($value)) {
+            return strlen($value);
+        }
+
+        return 0;
     }
 }

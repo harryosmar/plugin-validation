@@ -17,11 +17,18 @@ class Language
     /**
      * Language constructor.
      * @param string $lang
+     * @param array $translation
+     * provide parameter $translation for your own custom translation array
      */
-    public function __construct(string $lang)
+    public function __construct(string $lang, array $translation = [])
     {
         $this->lang = $lang;
-        $this->translation = include implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'lang', $this->lang . '.php']);
+
+        if (!empty($translation)) {
+            $this->translation = $translation;
+        } else {
+            $this->translation = include implode(DIRECTORY_SEPARATOR, [dirname(__FILE__), '..', 'lang', $this->lang . '.php']);
+        }
     }
 
     /**

@@ -8,8 +8,18 @@
 
 namespace PluginSimpleValidate\BaseAbstract;
 
-abstract class Field
+abstract class Field implements \PluginSimpleValidate\Contracts\Field
 {
+    const VAR_LIMIT = 'limit';
+
+    const VAR_MATCH = 'match';
+
+    const VAR_LOWER_LIMIT = 'lower';
+
+    const VAR_UPPER_LIMIT = 'upper';
+
+    const VAR_MESSAGE = 'message';
+
     /**
      * @param string $rulesMethod
      * @param array $args

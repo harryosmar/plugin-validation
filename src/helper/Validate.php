@@ -2,18 +2,11 @@
 
 namespace PluginSimpleValidate\helper\Validate;
 
+use PluginSimpleValidate\BaseAbstract\Field;
+use PluginSimpleValidate\Exception\InvalidTypeParameter;
+use function PluginSimpleValidate\helper\Cleaner\get_length;
+use function PluginSimpleValidate\helper\Cleaner\is_valid_type_for_length;
 use function PluginSimpleValidate\helper\Cleaner\trim_doubled_space;
-
-const VAR_LIMIT = 'limit';
-
-const VAR_MATCH = 'match';
-
-const VAR_LOWER_LIMIT = 'lower';
-
-const VAR_UPPER_LIMIT = 'upper';
-
-const VAR_MESSAGE = 'message';
-
 
 if (! function_exists('is_true')) {
     function is_true($value)
@@ -36,13 +29,6 @@ if (! function_exists('is_required')) {
     }
 }
 
-if (! function_exists('is_empty')) {
-    function is_empty($value)
-    {
-        return empty(trim_doubled_space($value));
-    }
-}
-
 if (! function_exists('is_valid_email')) {
     function is_valid_email($value)
     {
@@ -57,8 +43,8 @@ if (! function_exists('is_alpha')) {
     }
 }
 
-if (! function_exists('is_alpha_numeric')) {
-    function is_alpha_numeric($value)
+if (! function_exists('is_alpha_or_numeric')) {
+    function is_alpha_or_numeric($value)
     {
         return preg_match("/^([a-z0-9])+$/i", $value);
     }
@@ -71,7 +57,7 @@ if (! function_exists('is_decimal')) {
     }
 }
 
-if (! function_exists('is_true')) {
+if (! function_exists('is_integer')) {
     function is_integer($value)
     {
         return preg_match('/^[\-+]?[0-9]+$/', $value);
@@ -95,48 +81,126 @@ if (! function_exists('is_natural_no_zero')) {
 if (! function_exists('is_equal')) {
     function is_equal($value, array $args)
     {
-        return $value === $args[VAR_MATCH];
+        return $value === $args[Field::VAR_MATCH];
     }
 }
 
 if (! function_exists('less_than')) {
     function less_than($value, array $args)
     {
-        return $value < $args[VAR_LIMIT];
+        return $value < $args[Field::VAR_LIMIT];
     }
 }
 
 if (! function_exists('greater_than')) {
     function greater_than($value, array $args)
     {
-        return $value > $args[VAR_LIMIT];
+        return $value > $args[Field::VAR_LIMIT];
     }
 }
 
 if (! function_exists('less_or_equal_than')) {
     function less_or_equal_than($value, array $args)
     {
-        return $value <= $args[VAR_LIMIT];
+        return $value <= $args[Field::VAR_LIMIT];
     }
 }
 
 if (! function_exists('greater_or_equal_than')) {
     function greater_or_equal_than($value, array $args)
     {
-        return $value >= $args[VAR_LIMIT];
+        return $value >= $args[Field::VAR_LIMIT];
     }
 }
 
 if (! function_exists('between')) {
     function between($value, array $args)
     {
-        return $value < $args[VAR_UPPER_LIMIT] && $value > $args[VAR_LOWER_LIMIT];
+        return $value < $args[Field::VAR_UPPER_LIMIT] && $value > $args[Field::VAR_LOWER_LIMIT];
     }
 }
 
 if (! function_exists('between_or_equal')) {
     function between_or_equal($value, array $args)
     {
-        return $value <= $args[VAR_UPPER_LIMIT] && $value >= $args[VAR_LOWER_LIMIT];
+        return $value <= $args[Field::VAR_UPPER_LIMIT] && $value >= $args[Field::VAR_LOWER_LIMIT];
+    }
+}
+
+if (! function_exists('length')) {
+    function length($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) === $args[Field::VAR_LIMIT];
+    }
+}
+
+if (! function_exists('length_less_than')) {
+    function length_less_than($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) < $args[Field::VAR_LIMIT];
+    }
+}
+
+if (! function_exists('length_greater_than')) {
+    function length_greater_than($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) > $args[Field::VAR_LIMIT];
+    }
+}
+
+if (! function_exists('length_less_or_equal_than')) {
+    function length_less_or_equal_than($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) <= $args[Field::VAR_LIMIT];
+    }
+}
+
+if (! function_exists('length_greater_or_equal_than')) {
+    function length_greater_or_equal_than($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) >= $args[Field::VAR_LIMIT];
+    }
+}
+
+if (! function_exists('length_between')) {
+    function length_between($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) < $args[Field::VAR_UPPER_LIMIT] && get_length($value) > $args[Field::VAR_LOWER_LIMIT];
+    }
+}
+
+
+if (! function_exists('length_between_or_equal')) {
+    function length_between_or_equal($value, array $args)
+    {
+        if (!is_valid_type_for_length($value)) {
+            throw new InvalidTypeParameter('Invalid parameter type');
+        }
+
+        return get_length($value) <= $args[Field::VAR_UPPER_LIMIT] && get_length($value) >= $args[Field::VAR_LOWER_LIMIT];
     }
 }

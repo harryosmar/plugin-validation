@@ -14,10 +14,9 @@ interface Field
 {
     /**
      * @param Language $language
-     * @param bool $break_when_error
      * @return bool
      */
-    public function isValid(Language $language, $break_when_error = false) : bool;
+    public function isValid(Language $language) : bool;
 
     /**
      * @return string
@@ -40,14 +39,55 @@ interface Field
     public function getErrors();
 
     /**
-     * @return mixed
+     * @param string $message
+     * @return $this
+     */
+    public function isTrue(string $message = '');
+
+    /**
+     * @return $this
      */
     public function required();
 
     /**
      * @return $this
      */
+    public function isNumber();
+
+    /**
+     * @return $this
+     */
     public function validEmail();
+
+    /**
+     * @return $this
+     */
+    public function isAlpha();
+
+    /**
+     * @return $this
+     */
+    public function isAlphaOrNumeric();
+
+    /**
+     * @return $this
+     */
+    public function isDecimal();
+
+    /**
+     * @return $this
+     */
+    public function isInteger();
+
+    /**
+     * @return $this
+     */
+    public function isNatural();
+
+    /**
+     * @return $this
+     */
+    public function isNaturalNoZero();
 
     /**
      * @param int|float|double|string $match
@@ -62,6 +102,24 @@ interface Field
     public function lessThan($limit);
 
     /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function greaterThan($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lessOrEqualThan($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function greaterOrEqualThan($limit);
+
+    /**
      * @param int|float|double $lower
      * @param int|float|double $upper
      * @return $this
@@ -69,8 +127,53 @@ interface Field
     public function between($lower, $upper);
 
     /**
-     * @param string $message
+     * @param int|float|double $lower
+     * @param int|float|double $upper
      * @return $this
      */
-    public function isTrue(string $message = '');
+    public function betweenOrEqual($lower, $upper);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function length($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lengthLessThan($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lengthGreaterThan($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lengthLessOrEqualThan($limit);
+
+    /**
+     * @param int|float|double $limit
+     * @return $this
+     */
+    public function lengthGreaterOrEqualThan($limit);
+
+    /**
+     * @param int|float|double $lower
+     * @param int|float|double $upper
+     * @return $this
+     */
+    public function lengthBetween($lower, $upper);
+
+    /**
+     * @param int|float|double $lower
+     * @param int|float|double $upper
+     * @return $this
+     */
+    public function lengthBetweenOrEqual($lower, $upper);
 }
