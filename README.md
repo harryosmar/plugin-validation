@@ -37,7 +37,12 @@ $ composer install
 ```
 
 ## How To Use
-1. initialize
+* [1. initialize](#validation-errors)
+* [2. add `fields` to `$validation` object](#validation-errors)
+* [3. call the `$validation` `run` method](#validation-errors)
+* [4, get the errors message if `$status` is `false`](#validation-errors)
+
+###### 1. initialize
 ```php
 <?php
 use PluginSimpleValidate\Validation;
@@ -49,7 +54,8 @@ $validation = new Validation($this->language);
 $emailField = (new Field('email', ''))->required()->validEmail();
 $passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->lengthGreaterThan(5); // add chain of rules to the `field`
 ```
-2. add `fields` to `$validation` object
+
+###### 2. add `fields` to `$validation` object
 ```php
 <?php
 /**
@@ -59,13 +65,15 @@ $passwordField = (new Field('password', ''))->required()->isAlphaOrNumeric()->le
  */
 $validation->addField($emailField)->addField($passwordField); // add chain of fields to `$validation` object
 ```
-3. call the `$validation` `run` method
+
+###### 3. call the `$validation` `run` method
 ```php
 <?php 
 /** @var \PluginSimpleValidate\Validation $validation */
 $status = $validation->run();
 ```
-4. get the errors message if `$status` is `false`
+
+###### 4. get the errors message if `$status` is `false`
 ```php
 <?php
 /** 
