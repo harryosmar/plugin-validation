@@ -7,7 +7,7 @@ Composer plugin for validation purpose, contains set of validation rules.
 [![Code Coverage](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/harryosmar/plugin-validation/?branch=master)
 
 ## Features 
-- Multi Language, available `en`, `id`
+- Multi Language, available `en`, `id`, or use your own [custom translation](#custom-translation)
 - Validation for multi `fields` and a `field` can have multi `rules`
 ```
 validation > fields > rules
@@ -360,6 +360,19 @@ function someMethod() : bool
 {
     // add logic here
 }
+```
+
+## Custom translation
+If you want to use your own translation, when instantiate `Language` class provide the parameter `$translation` array
+```php
+<?php
+use PluginSimpleValidate\Libraries\Language;
+
+/** 
+ * @var array $translationArray
+ * $translationArray must have the same format with https://github.com/harryosmar/plugin-validation/blob/master/src/lang/en.php
+ */
+$language = new Language('pl', $translationArray);
 ```
 
 ### Submitting bugs and feature requests
