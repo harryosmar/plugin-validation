@@ -41,6 +41,7 @@ $ composer install
 * [2. add `fields` to `$validation` object](#2-add-fields-to-validation-object)
 * [3. call the `$validation` `run` method](#3-call-the-validation-run-method)
 * [4, get the errors message if `$status` is `false`](#4-get-the-errors-message-if-status-is-false)
+* [validation option with `break` validation chain](#validation-option-with-break-validation-chain)
 
 ###### 1. initialize
 ```php
@@ -99,6 +100,8 @@ if (!$status) {
     ],
 ];
 ```
+
+###### validation option with `break` validation chain
 You can `break` the `validation chain` if there is a `field` get an error. In [`step 3`](#3-call-the-validation-run-method), when calling the method `run` of `$validation` object, add parameter `true` to enable `break the chain when error occured`
 ```php
 <?php 
