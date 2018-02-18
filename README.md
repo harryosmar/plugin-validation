@@ -127,7 +127,32 @@ then `$erros` values will be
 ```
 
 ## Available Rules
-- `required`
+* [required](#required)
+* [numeric](#numeric)
+* [email](#email)
+* [aplha](#aplha)
+* [alpha or numeric](#alpha-or-numeric)
+* [decimal](#decimal)
+* [natural](#natural)
+* [natural with no zero](#natural-with-no-zero)
+* [equal](#equal)
+* [less than](#less-than)
+* [greater than](#greater-than)
+* [less or equal than](#less-or-equal-than)
+* [greater or equal than](#greater-or-equal-than)
+* [between](#between)
+* [between or equal](#between-or-equal)
+* [length](#length)
+* [length less than](#length-less-than)
+* [length greater than](#length-greater-than)
+* [length less or equal than](#length-less-or-equal-than)
+* [length greater or equal than](#length-greater-or-equal-than)
+* [length between](#length-between)
+* [length between or equal](#length-between-or-equal)
+* [`is true` for `custom rule logic`](is-true-for-custom-rule-logic)
+
+
+##### `required`
 ```php
 <?php
 /**
@@ -135,7 +160,8 @@ then `$erros` values will be
  */
 $field->required();
 ```
-- `numeric`
+
+##### `numeric`
 ```php
 <?php
 /**
@@ -143,7 +169,8 @@ $field->required();
  */
 $field->isNumber();
 ```
-- `email`
+
+##### `email`
 ```php
 <?php
 /**
@@ -151,7 +178,8 @@ $field->isNumber();
  */
 $field->validEmail();
 ```
-- `aplha`
+
+##### `aplha`
 ```php
 <?php
 /**
@@ -159,7 +187,8 @@ $field->validEmail();
  */
 $field->isAlpha();
 ```
-- `alpha or numeric`
+
+##### `alpha or numeric`
 ```php
 <?php
 /**
@@ -167,7 +196,8 @@ $field->isAlpha();
  */
 $field->isAlphaOrNumeric();
 ```
-- `decimal`
+
+##### `decimal`
 ```php
 <?php
 /**
@@ -175,7 +205,8 @@ $field->isAlphaOrNumeric();
  */
 $field->isDecimal();
 ```
-- `natural`
+
+##### `natural`
 ```php
 <?php
 /**
@@ -183,7 +214,8 @@ $field->isDecimal();
  */
 $field->isNatural();
 ```
-- `natural with no zero`
+
+##### `natural with no zero`
 ```php
 <?php
 /**
@@ -191,7 +223,8 @@ $field->isNatural();
  */
 $field->isNaturalNoZero();
 ```
-- `equal`
+
+##### `equal`
 ```php
 <?php
 /**
@@ -199,7 +232,8 @@ $field->isNaturalNoZero();
  */
 $field->equal('old password');
 ```
-- `less than`
+
+##### `less than`
 ```php
 <?php
 /**
@@ -207,7 +241,8 @@ $field->equal('old password');
  */
 $field->lessThan(5);
 ```
-- `greater than`
+
+##### `greater than`
 ```php
 <?php
 /**
@@ -215,7 +250,8 @@ $field->lessThan(5);
  */
 $field->greaterThan(5);
 ```
-- `less or equal than`
+
+##### `less or equal than`
 ```php
 <?php
 /**
@@ -223,7 +259,8 @@ $field->greaterThan(5);
  */
 $field->lessOrEqualThan(5);
 ```
-- `greater or equal than`
+
+##### `greater or equal than`
 ```php
 <?php
 /**
@@ -231,7 +268,8 @@ $field->lessOrEqualThan(5);
  */
 $field->greaterOrEqualThan(5);
 ```
-- `between`
+
+##### `between`
 ```php
 <?php
 /**
@@ -239,7 +277,8 @@ $field->greaterOrEqualThan(5);
  */
 $field->between(5, 10);
 ```
-- `between or equal`
+
+##### `between or equal`
 ```php
 <?php
 /**
@@ -247,7 +286,8 @@ $field->between(5, 10);
  */
 $field->betweenOrEqual(5, 10);
 ```
-- `length`
+
+##### `length`
 ```php
 <?php
 /**
@@ -255,7 +295,8 @@ $field->betweenOrEqual(5, 10);
  */
 $field->length(5);
 ```
-- `length less than`
+
+##### `length less than`
 ```php
 <?php
 /**
@@ -263,7 +304,8 @@ $field->length(5);
  */
 $field->lengthLessThan(5);
 ```
-- `length greater than`
+
+##### `length greater than`
 ```php
 <?php
 /**
@@ -271,7 +313,8 @@ $field->lengthLessThan(5);
  */
 $field->lengthGreaterThan(5);
 ```
-- `length less or equal than`
+
+##### `length less or equal than`
 ```php
 <?php
 /**
@@ -279,7 +322,8 @@ $field->lengthGreaterThan(5);
  */
 $field->lengthLessOrEqualThan(5);
 ```
-- `length greater or equal than`
+
+##### `length greater or equal than`
 ```php
 <?php
 /**
@@ -287,7 +331,8 @@ $field->lengthLessOrEqualThan(5);
  */
 $field->lengthGreaterOrEqualThan(5);
 ```
-- `length between`
+
+##### `length between`
 ```php
 <?php
 /**
@@ -295,7 +340,8 @@ $field->lengthGreaterOrEqualThan(5);
  */
 $field->lengthBetween(5, 10);
 ```
-- `length between or equal`
+
+##### `length between or equal`
 ```php
 <?php
 /**
@@ -303,9 +349,8 @@ $field->lengthBetween(5, 10);
  */
 $field->lengthBetweenOrEqual(5, 10);
 ```
-- `is true`
 
-This is used for validation `custom rule logic`
+##### `is true` for `custom rule logic`
 ```php
 <?php
 $field = new \PluginSimpleValidate\Field('field', someMethod());
