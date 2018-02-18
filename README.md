@@ -37,10 +37,10 @@ $ composer install
 ```
 
 ## How To Use
-* [1. initialize](#validation-errors)
-* [2. add `fields` to `$validation` object](#validation-errors)
-* [3. call the `$validation` `run` method](#validation-errors)
-* [4, get the errors message if `$status` is `false`](#validation-errors)
+* [1. initialize](#1-initialize)
+* [2. add `fields` to `$validation` object](#2-add-fields-to-validation-object)
+* [3. call the `$validation` `run` method](#3-call-the-validation-run-method)
+* [4, get the errors message if `$status` is `false`](#4-get-the-errors-message-if-status-is-false)
 
 ###### 1. initialize
 ```php
@@ -99,7 +99,7 @@ if (!$status) {
     ],
 ];
 ```
-You can `break` the `validation chain` if there is a `field` get an error. In `step 3`, when calling the method `run` of `$validation` object, add parameter `true` to enable `break the chain when error occured`
+You can `break` the `validation chain` if there is a `field` get an error. In [`step 3`](#3-call-the-validation-run-method), when calling the method `run` of `$validation` object, add parameter `true` to enable `break the chain when error occured`
 ```php
 <?php 
 /**
