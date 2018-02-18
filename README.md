@@ -149,7 +149,7 @@ then `$erros` values will be
 * [length greater or equal than](#length-greater-or-equal-than)
 * [length between](#length-between)
 * [length between or equal](#length-between-or-equal)
-* [`is true` for `custom rule logic`](is-true-for-custom-rule-logic)
+* [`is true` for `custom rule logic`](#is-true-for-custom-rule-logic)
 
 
 ##### `required`
