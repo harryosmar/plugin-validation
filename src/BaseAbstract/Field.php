@@ -20,6 +20,8 @@ abstract class Field implements \PluginSimpleValidate\Contracts\Field
 
     const VAR_MESSAGE = 'message';
 
+    const VAR_REGION = 'region';
+
     /**
      * @param string $rulesMethod
      * @param array $args
