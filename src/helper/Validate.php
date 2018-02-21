@@ -205,11 +205,12 @@ if (! function_exists('valid_phone_number')) {
     function valid_phone_number($value, array $args)
     {
         try {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+
             /** @var PhoneNumber $phoneNumber */
-            $phoneNumber = PhoneNumberUtil::getInstance()->parse($value, $args[Field::VAR_REGION]);
-            return PhoneNumberUtil::getInstance()->isValidNumberForRegion(
-                $phoneNumber,
-                $args[Field::VAR_REGION]
+            $phoneNumberProto = $phoneUtil->parse($value, $args[Field::VAR_REGION]);
+            return $phoneUtil->isValidNumber(
+                $phoneNumberProto
             );
         } catch (NumberParseException $exception) {
             return false;

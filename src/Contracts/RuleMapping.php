@@ -15,5 +15,10 @@ interface RuleMapping
      * @param array $args
      * @return Rule
      */
-    public static function getRule(string $key, array $args = []) : Rule;
+    public function getRule(string $key, array $args = []) : Rule;
+
+    /**
+     * @return $this
+     */
+    public static function getInstance();
 }

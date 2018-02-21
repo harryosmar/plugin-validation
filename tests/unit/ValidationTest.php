@@ -3,6 +3,7 @@
 namespace PluginSimpleValidate\Tests\unit;
 
 use PluginSimpleValidate\Field;
+use PluginSimpleValidate\RuleMapping;
 use PluginSimpleValidate\Validation;
 
 class ValidationTest extends Base
@@ -55,10 +56,10 @@ class ValidationTest extends Base
     {
         $validation = new Validation($this->language);
 
-        return $validation->addField((new Field('email', ''))
+        return $validation->addField((new Field(RuleMapping::getInstance(), 'email', ''))
             ->required()
             ->validEmail()
-        )->addField((new Field('password', ''))
+        )->addField((new Field(RuleMapping::getInstance(), 'password', ''))
             ->required()
             ->isAlphaOrNumeric()
             ->lengthGreaterThan(5)

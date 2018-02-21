@@ -10,7 +10,7 @@ return [
     'is_true' => '%s',
     'numeric' => 'harus berisi angka',
     'required' => 'harus diisi',
-    'email' => 'harus berisi alamat email yang valid',
+    'email' => 'harus berisi alamat email yang benar',
     'alpha' => 'hanya dapat berisi karakter abjad',
     'alpha_or_numeric' => 'hanya dapat berisi karakter alpha atau numeric',
     'decimal' => 'harus berisi angka desimal',
@@ -31,4 +31,5 @@ return [
     'length_greater_or_equal_than' => 'panjang harus lebih besar atau sama dengan %s',
     'length_between' => 'panjang harus lebih besar dari %s dan lebih kecil dari %s',
     'length_between_or_equal' => 'panjang harus lebih besar atau sama dengan %s dan lebih kecil atau sama dengan %s',
+    'phone_number' => 'harus berisi nomor telepon yang benar',
 ];

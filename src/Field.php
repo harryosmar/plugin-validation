@@ -2,113 +2,10 @@
 
 namespace PluginSimpleValidate;
 
-use PluginSimpleValidate\Libraries\Language;
 use PluginSimpleValidate\BaseAbstract\RuleMapping as AbstractRuleMapping;
 
 class Field extends \PluginSimpleValidate\BaseAbstract\Field
 {
-    /**
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $value;
-
-    /**
-     * @var array
-     */
-    private $errors;
-
-    /**
-     * @var array
-     * array of Rule
-     */
-    private $rules = [];
-
-    /**
-     * @var bool
-     */
-    private $status;
-
-    /**
-     * Field constructor.
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __construct(string $name, $value)
-    {
-        $this->name = $name;
-        $this->value = $value;
-        $this->errors = [];
-    }
-
-    /**
-     * @param string $rulesMethod
-     * @param array $args
-     * @return $this
-     */
-    protected function addRules(string $rulesMethod, array $args = [])
-    {
-        $this->rules[$rulesMethod] = RuleMapping::getRule($rulesMethod, $args);
-        return $this;
-    }
-
-    /**
-     * @param Language $language
-     * @return bool
-     */
-    public function isValid(Language $language) : bool
-    {
-        /** @var \PluginSimpleValidate\Contracts\Rule $rule */
-        foreach ($this->rules as $ruleName => $rule) {
-            if (!$rule->isValid($language, $this->value)) {
-                $this->status = false;
-                $this->errors[] = $rule->getError();
-            }
-        }
-
-        if (empty($this->errors)) {
-            $this->status = true;
-        }
-
-        return $this->status;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @return array
-     */
-    public function getRules(): array
-    {
-        return $this->rules;
-    }
-
-    /**
-     * @return array
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
     /**
      * @return $this
      */
@@ -341,6 +238,16 @@ class Field extends \PluginSimpleValidate\BaseAbstract\Field
     public function lengthBetweenOrEqual($lower, $upper)
     {
         $this->addRules(AbstractRuleMapping::VALIDATE_LENGTH_BETWEEN_OR_EQUAL_THAN, [static::VAR_LOWER_LIMIT => $lower, static::VAR_UPPER_LIMIT => $upper]);
+        return $this;
+    }
+
+    /**
+     * @param string $region
+     * @return \PluginSimpleValidate\Contracts\Field
+     */
+    public function isValidPhone(string $region)
+    {
+        $this->addRules(AbstractRuleMapping::VALIDATE_PHONE_NUMBER, [static::VAR_REGION => $region]);
         return $this;
     }
 }

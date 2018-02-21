@@ -13,7 +13,7 @@ use PluginSimpleValidate\Libraries\Language;
 interface Field
 {
     /**
-     * @param Language $language
+     * @param $language
      * @return bool
      */
     public function isValid(Language $language) : bool;
@@ -27,6 +27,12 @@ interface Field
      * @return mixed
      */
     public function getValue();
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function setValue($value);
 
     /**
      * @return array
@@ -176,4 +182,10 @@ interface Field
      * @return $this
      */
     public function lengthBetweenOrEqual($lower, $upper);
+
+    /**
+     * @param string $region
+     * @return $this
+     */
+    public function isValidPhone(string $region);
 }

@@ -31,4 +31,5 @@ return [
     'length_greater_or_equal_than' => 'field length must be greater or equal than %s',
     'length_between' => 'field length must be greater than %s or less than %s',
     'length_between_or_equal' => 'field length must be greater or equal than %s or less or equal than %s',
+    'phone_number' => 'field must be a valid phone number',
 ];
