@@ -363,7 +363,7 @@ function someMethod() : bool
 }
 ```
 
-##### `is true` for `custom rule logic`
+##### valid phone
 ```php
 <?php
 /**
