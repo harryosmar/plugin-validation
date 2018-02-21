@@ -150,6 +150,7 @@ then `$erros` values will be
 * [length between](#length-between)
 * [length between or equal](#length-between-or-equal)
 * [`is true` for `custom rule logic`](#is-true-for-custom-rule-logic)
+* [valid phone](#valid-phone)
 
 
 ##### `required`
@@ -360,6 +361,15 @@ function someMethod() : bool
 {
     // add logic here
 }
+```
+
+##### valid phone
+```php
+<?php
+/**
+ * @var \PluginSimpleValidate\Field $field
+ */
+$field->isValidPhone('ID'); // `ID` is region code for `indonesia` country
 ```
 
 ## Custom translation
