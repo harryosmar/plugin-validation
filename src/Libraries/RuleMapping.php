@@ -6,9 +6,10 @@
  * Time: 4:51 PM
  */
 
-namespace PluginSimpleValidate;
+namespace PluginSimpleValidate\Libraries;
 
 use PluginSimpleValidate\Exception\RuleNotExist;
+use PluginSimpleValidate\Rule;
 
 class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping
 {
@@ -27,7 +28,7 @@ class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping
     /**
      * @param string $key
      * @param array $args
-     * @return Contracts\Rule
+     * @return \PluginSimpleValidate\Contracts\Rule
      * @throws RuleNotExist
      */
     public function getRule(string $key, array $args = []) : \PluginSimpleValidate\Contracts\Rule

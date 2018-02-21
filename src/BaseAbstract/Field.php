@@ -57,16 +57,13 @@ abstract class Field implements \PluginSimpleValidate\Contracts\Field
 
     /**
      * Field constructor.
-     * @param \PluginSimpleValidate\Contracts\RuleMapping $ruleMapping
      * @param string $name
      * @param mixed $value
      */
     public function __construct(
-        \PluginSimpleValidate\Contracts\RuleMapping $ruleMapping,
         string $name,
         $value
     ) {
-        $this->ruleMapping = $ruleMapping;
         $this->name = $name;
         $this->value = $value;
         $this->errors = [];
@@ -145,7 +142,7 @@ abstract class Field implements \PluginSimpleValidate\Contracts\Field
      */
     protected function addRules(string $rulesMethod, array $args = [])
     {
-        $this->rules[$rulesMethod] = $this->ruleMapping->getRule($rulesMethod, $args);
+        $this->rules[$rulesMethod] = \PluginSimpleValidate\Libraries\RuleMapping::getInstance()->getRule($rulesMethod, $args);
         return $this;
     }
 
