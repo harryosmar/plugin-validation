@@ -55,6 +55,8 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
      */
     public function run($break_when_error = false) : bool
     {
+        $this->emptyErrors();
+
         /** @var Field $field */
         foreach ($this->fields as $field) {
             if (!$field->isValid($this->language)) {
@@ -83,6 +85,15 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
     public function getErrors()
     {
         return $this->errors;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function emptyErrors()
+    {
+        $this->errors = [];
+        return $this;
     }
 
     /**

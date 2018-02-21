@@ -2,6 +2,9 @@
 
 namespace PluginSimpleValidate\helper\Validate;
 
+use libphonenumber\NumberParseException;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberUtil;
 use PluginSimpleValidate\BaseAbstract\Field;
 use PluginSimpleValidate\Exception\InvalidTypeParameter;
 use function PluginSimpleValidate\helper\Cleaner\get_length;
@@ -195,6 +198,23 @@ if (! function_exists('length_between_or_equal')) {
             $value,
             get_length($value) <= $args[Field::VAR_UPPER_LIMIT] && get_length($value) >= $args[Field::VAR_LOWER_LIMIT]
         );
+    }
+}
+
+if (! function_exists('valid_phone_number')) {
+    function valid_phone_number($value, array $args)
+    {
+        try {
+            $phoneUtil = PhoneNumberUtil::getInstance();
+
+            /** @var PhoneNumber $phoneNumber */
+            $phoneNumberProto = $phoneUtil->parse($value, $args[Field::VAR_REGION]);
+            return $phoneUtil->isValidNumber(
+                $phoneNumberProto
+            );
+        } catch (NumberParseException $exception) {
+            return false;
+        }
     }
 }
 
