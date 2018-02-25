@@ -12,6 +12,7 @@ Composer plugin for validation purpose, contains set of validation rules.
 ```
 validation > fields > rules
 ```
+![validation structure](https://github.com/harryosmar/plugin-validation/blob/master/resources/images/validation-structure.jpeg)
 
 ## Installation
 
@@ -35,8 +36,6 @@ Then running
 ```bash
 $ composer install
 ```
-
-![phone verify flow](https://github.com/harryosmar/plugin-validation/blob/master/resources/images/validation-structure.jpeg)
 
 ## How To Use
 * [1. initialize](#1-initialize)
