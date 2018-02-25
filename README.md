@@ -36,6 +36,8 @@ Then running
 $ composer install
 ```
 
+![phone verify flow](https://github.com/harryosmar/plugin-validation/blob/master/resources/images/validation-structure.jpeg)
+
 ## How To Use
 * [1. initialize](#1-initialize)
 * [2. add `fields` to `$validation` object](#2-add-fields-to-validation-object)
