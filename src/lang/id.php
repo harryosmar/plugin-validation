@@ -10,6 +10,7 @@ return [
     'is_true' => '%s',
     'numeric' => 'harus berisi angka',
     'required' => 'harus diisi',
+    'not_empty' => 'tidak boleh kosong',
     'email' => 'harus berisi alamat email yang benar',
     'alpha' => 'hanya dapat berisi karakter abjad',
     'alpha_or_numeric' => 'hanya dapat berisi karakter alpha atau numeric',

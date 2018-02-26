@@ -16,6 +16,8 @@ abstract class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMappin
 
     const VALIDATE_REQUIRED = 'required';
 
+    const VALIDATE_IS_NOT_EMPTY = 'not_empty';
+
     const VALIDATE_EMAIL = 'valid_email';
 
     const VALIDATE_ALPHA = 'alpha';
@@ -84,6 +86,10 @@ abstract class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMappin
             static::VALIDATE_REQUIRED => [
                 'validation_method' => 'is_required',
                 'lang_key' => 'required'
+            ],
+            static::VALIDATE_IS_NOT_EMPTY => [
+                'validation_method' => 'is_not_empty',
+                'lang_key' => 'not_empty'
             ],
             static::VALIDATE_EMAIL => [
                 'validation_method' => 'is_valid_email',

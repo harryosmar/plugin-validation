@@ -18,6 +18,15 @@ class Field extends \PluginSimpleValidate\BaseAbstract\Field
     /**
      * @return $this
      */
+    public function notEmpty()
+    {
+        $this->addRules(AbstractRuleMapping::VALIDATE_IS_NOT_EMPTY);
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function validEmail()
     {
         $this->addRules(AbstractRuleMapping::VALIDATE_EMAIL);
