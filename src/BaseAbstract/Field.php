@@ -8,9 +8,10 @@
 
 namespace PluginSimpleValidate\BaseAbstract;
 
+use PluginSimpleValidate\Contracts\BaseField;
 use PluginSimpleValidate\Libraries\Language;
 
-abstract class Field implements \PluginSimpleValidate\Contracts\Field
+abstract class Field implements BaseField
 {
     const VAR_LIMIT = 'limit';
 
@@ -70,53 +71,11 @@ abstract class Field implements \PluginSimpleValidate\Contracts\Field
     }
 
     /**
-     * @param Language $language
-     * @return bool
-     */
-    public function isValid(Language $language) : bool
-    {
-        // empty the `errors` array
-        $this->emptyErrors();
-
-        /** @var \PluginSimpleValidate\Contracts\Rule $rule */
-        foreach ($this->rules as $ruleName => $rule) {
-            if (!$rule->isValid($language, $this->value)) {
-                $this->status = false;
-                $this->errors[] = $rule->getError();
-            }
-        }
-
-        if (empty($this->errors)) {
-            $this->status = true;
-        }
-
-        return $this->status;
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
     {
         return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param mixed $value
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
     }
 
     /**
@@ -133,17 +92,6 @@ abstract class Field implements \PluginSimpleValidate\Contracts\Field
     public function getErrors(): array
     {
         return $this->errors;
-    }
-
-    /**
-     * @param string $rulesMethod
-     * @param array $args
-     * @return $this
-     */
-    protected function addRules(string $rulesMethod, array $args = [])
-    {
-        $this->rules[$rulesMethod] = \PluginSimpleValidate\Libraries\RuleMapping::getInstance()->getRule($rulesMethod, $args);
-        return $this;
     }
 
     /**

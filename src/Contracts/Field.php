@@ -8,21 +8,8 @@
 
 namespace PluginSimpleValidate\Contracts;
 
-use PluginSimpleValidate\Libraries\Language;
-
-interface Field
+interface Field extends BaseField
 {
-    /**
-     * @param $language
-     * @return bool
-     */
-    public function isValid(Language $language) : bool;
-
-    /**
-     * @return string
-     */
-    public function getName(): string;
-
     /**
      * @return mixed
      */
@@ -35,14 +22,11 @@ interface Field
     public function setValue($value);
 
     /**
-     * @return array
+     * @param string $rulesMethod
+     * @param array $args
+     * @return mixed
      */
-    public function getRules();
-
-    /**
-     * @return array
-     */
-    public function getErrors();
+    public function addRules(string $rulesMethod, array $args = []);
 
     /**
      * @param string $message

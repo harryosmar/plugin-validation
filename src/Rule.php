@@ -15,27 +15,27 @@ class Rule implements \PluginSimpleValidate\Contracts\Rule
     /**
      * @var string
      */
-    private $validationMethod;
+    protected $validationMethod;
 
     /**
      * @var string
      */
-    private $langKey;
+    protected $langKey;
 
     /**
      * @var bool
      */
-    private $status;
+    protected $status;
 
     /**
      * @var string
      */
-    private $error;
+    protected $error;
 
     /**
      * @var array
      */
-    private $args;
+    protected $args;
 
     /**
      * Rule constructor.
