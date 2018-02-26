@@ -8,7 +8,9 @@
 
 namespace PluginSimpleValidate\BaseAbstract;
 
-abstract class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMapping
+use PluginSimpleValidate\Exception\RuleNotExist;
+
+abstract class RuleMapping
 {
     const VALIDATE_IS_TRUE = 'is_true';
 
@@ -66,11 +68,6 @@ abstract class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMappin
      * @var array
      */
     protected $list;
-
-    /**
-     * @var $this
-     */
-    protected static $instance;
 
     protected function __construct()
     {
@@ -180,5 +177,16 @@ abstract class RuleMapping implements \PluginSimpleValidate\Contracts\RuleMappin
                 'lang_key' => 'phone_number'
             ],
         ];
+    }
+
+    /**
+     * @param $ruleName
+     * @throws RuleNotExist
+     */
+    protected function checkRule($ruleName)
+    {
+        if (!isset($this->list[$ruleName])) {
+            throw new RuleNotExist('Rule does not exist');
+        }
     }
 }

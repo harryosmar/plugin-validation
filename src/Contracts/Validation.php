@@ -12,9 +12,9 @@ namespace PluginSimpleValidate\Contracts;
 interface Validation
 {
     /**
-     * @param Field $field
+     * @param BaseField $field
      */
-    public function addField(Field $field);
+    public function addField(BaseField $field);
 
     /**
      * @param bool $break_when_error

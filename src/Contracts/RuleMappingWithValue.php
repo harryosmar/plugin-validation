@@ -8,12 +8,13 @@
 
 namespace PluginSimpleValidate\Contracts;
 
-interface RuleMapping extends BaseRuleMapping
+interface RuleMappingWithValue extends BaseRuleMapping
 {
     /**
      * @param string $key
+     * @param mixed $value
      * @param array $args
-     * @return Rule
+     * @return RuleWithValue
      */
-    public function getRule(string $key, array $args = []) : Rule;
+    public function getRule(string $key, $value, array $args = []) : RuleWithValue;
 }

@@ -2,6 +2,7 @@
 
 namespace PluginSimpleValidate;
 
+use PluginSimpleValidate\Contracts\BaseField;
 use PluginSimpleValidate\Libraries\Language;
 
 class Validation implements \PluginSimpleValidate\Contracts\Validation
@@ -40,10 +41,10 @@ class Validation implements \PluginSimpleValidate\Contracts\Validation
     }
 
     /**
-     * @param \PluginSimpleValidate\Contracts\Field $field
+     * @param BaseField $field
      * @return $this
      */
-    public function addField(\PluginSimpleValidate\Contracts\Field $field)
+    public function addField(BaseField $field)
     {
         $this->fields[$field->getName()] = $field;
         return $this;

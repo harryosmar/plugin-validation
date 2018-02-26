@@ -2,17 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: harry
- * Date: 2/15/18
- * Time: 4:51 PM
+ * Date: 2/26/18
+ * Time: 5:38 PM
  */
 
-namespace PluginSimpleValidate\Libraries;
+namespace PluginSimpleValidate\Libraries\MultiValues;
 
-use PluginSimpleValidate\Contracts\Rule as ContractsRule;
+use PluginSimpleValidate\Contracts\RuleMappingWithValue;
+use PluginSimpleValidate\Contracts\RuleWithValue as ContractsRuleWithValue;
 use PluginSimpleValidate\Exception\RuleNotExist;
-use PluginSimpleValidate\Rule;
+use PluginSimpleValidate\WithValue\Rule;
 
-class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping implements \PluginSimpleValidate\Contracts\RuleMapping
+class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping implements RuleMappingWithValue
 {
     /**
      * @var $this
@@ -20,7 +21,7 @@ class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping impleme
     private static $instance;
 
     /**
-     * @return \PluginSimpleValidate\Contracts\RuleMapping
+     * @return \PluginSimpleValidate\Contracts\RuleMappingWithValue
      */
     public static function getInstance()
     {
@@ -33,17 +34,19 @@ class RuleMapping extends \PluginSimpleValidate\BaseAbstract\RuleMapping impleme
 
     /**
      * @param string $key
+     * @param mixed $value
      * @param array $args
-     * @return ContractsRule
+     * @return ContractsRuleWithValue
      * @throws RuleNotExist
      */
-    public function getRule(string $key, array $args = []): ContractsRule
+    public function getRule(string $key, $value, array $args = []): ContractsRuleWithValue
     {
         $this->checkRule($key);
 
         return new Rule(
             $this->list[$key]['validation_method'],
             $this->list[$key]['lang_key'],
+            $value,
             $args
         );
     }

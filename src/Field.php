@@ -3,9 +3,73 @@
 namespace PluginSimpleValidate;
 
 use PluginSimpleValidate\BaseAbstract\RuleMapping as AbstractRuleMapping;
+use PluginSimpleValidate\Libraries\Language;
 
-class Field extends \PluginSimpleValidate\BaseAbstract\Field
+class Field extends \PluginSimpleValidate\BaseAbstract\Field implements \PluginSimpleValidate\Contracts\Field
 {
+    /**
+     * @param Language $language
+     * @return bool
+     */
+    public function isValid(Language $language) : bool
+    {
+        // empty the `errors` array
+        $this->emptyErrors();
+
+        /** @var \PluginSimpleValidate\Contracts\Rule $rule */
+        foreach ($this->rules as $ruleName => $rule) {
+            if (!$rule->isValid($language, $this->value)) {
+                $this->status = false;
+                $this->errors[] = $rule->getError();
+            }
+        }
+
+        if (empty($this->errors)) {
+            $this->status = true;
+        }
+
+        return $this->status;
+    }
+
+    /**
+     * @param string $rulesMethod
+     * @param array $args
+     * @return $this
+     */
+    public function addRules(string $rulesMethod, array $args = [])
+    {
+        $this->rules[$rulesMethod] = \PluginSimpleValidate\Libraries\RuleMapping::getInstance()->getRule($rulesMethod, $args);
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $message
+     * @return $this
+     */
+    public function isTrue(string $message = '')
+    {
+        $this->addRules(AbstractRuleMapping::VALIDATE_IS_TRUE, [static::VAR_MESSAGE => $message]);
+        return $this;
+    }
+
     /**
      * @return $this
      */
@@ -40,16 +104,6 @@ class Field extends \PluginSimpleValidate\BaseAbstract\Field
     public function equal($match)
     {
         $this->addRules(AbstractRuleMapping::VALIDATE_EQUAL, [static::VAR_MATCH => $match]);
-        return $this;
-    }
-
-    /**
-     * @param string $message
-     * @return $this
-     */
-    public function isTrue(string $message = '')
-    {
-        $this->addRules(AbstractRuleMapping::VALIDATE_IS_TRUE, [static::VAR_MESSAGE => $message]);
         return $this;
     }
 
