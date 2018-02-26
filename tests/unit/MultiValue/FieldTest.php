@@ -27,7 +27,7 @@ class FieldTest extends Base
         ], $field->getErrors());
     }
 
-    public function test_is_multi_rules()
+    public function test_multi_rules()
     {
         $email = '';
 
