@@ -18,6 +18,34 @@ class FieldTest extends Base
         $field = (new Field('username', ''))->required();
         $this->assertFalse($field->isValid($this->language));
         $this->assertEquals(['field is required'], $field->getErrors());
+
+        $field->setValue(false);
+        $this->assertTrue($field->isValid($this->language));
+
+        $field->setValue(0);
+        $this->assertTrue($field->isValid($this->language));
+
+        $field->setValue(null);
+        $this->assertTrue($field->isValid($this->language));
+    }
+
+    public function test_is_not_empty()
+    {
+        $field = (new Field('username', false))->notEmpty();
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['field can not be empty'], $field->getErrors());
+
+        $field->setValue(0);
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['field can not be empty'], $field->getErrors());
+
+        $field->setValue('');
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['field can not be empty'], $field->getErrors());
+
+        $field->setValue(null);
+        $this->assertFalse($field->isValid($this->language));
+        $this->assertEquals(['field can not be empty'], $field->getErrors());
     }
 
     public function test_is_less_than()

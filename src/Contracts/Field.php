@@ -58,6 +58,11 @@ interface Field
     /**
      * @return $this
      */
+    public function notEmpty();
+
+    /**
+     * @return $this
+     */
     public function isNumber();
 
     /**

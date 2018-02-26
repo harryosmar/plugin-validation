@@ -28,6 +28,13 @@ if (! function_exists('is_number')) {
 if (! function_exists('is_required')) {
     function is_required($value)
     {
+        return $value !== '';
+    }
+}
+
+if (! function_exists('is_not_empty')) {
+    function is_not_empty($value)
+    {
         return !empty(trim_doubled_space($value));
     }
 }

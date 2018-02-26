@@ -10,6 +10,7 @@ return [
     'is_true' => '%s',
     'numeric' => 'field must be a number',
     'required' => 'field is required',
+    'not_empty' => 'field can not be empty',
     'email' => 'field must be a valid email address',
     'alpha' => 'field may only contain letters',
     'alpha_or_numeric' => 'field may only letters and numbers',
