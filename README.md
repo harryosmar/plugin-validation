@@ -8,7 +8,7 @@ Composer plugin for validation purpose, contains set of validation rules.
 
 ## Features 
 - Multi Language, available `en`, `id`, or use your own [custom translation](#custom-translation)
-- Validation for multi `fields` and a `field` can have multi `rules`
+- Validation for multi `fields` and a [`field`](https://github.com/harryosmar/plugin-validation#field) can have multi [`rules`](https://github.com/harryosmar/plugin-validation#available-rules)
 ```
 validation > fields > rules
 ```
@@ -124,6 +124,42 @@ then `$erros` values will be
         'field is required',
         'field must be a valid email address'
     ]
+];
+```
+## Field
+There are 2 type of `field` available :
+- Field with single value
+```php
+<?php
+use PluginSimpleValidate\Field;
+
+$field = new Field('name', 'value');
+$field->required()->lengthGreaterOrEqualThan(10);
+```
+- Field with multi values
+```php
+<?php
+use PluginSimpleValidate\MultiValues\Field;
+
+$firstname = 'harry';
+$lastname = '';
+$field = new Field('name');
+$field->isTrue($firstname !== '', 'firstname required')
+    ->isTrue($lastname !== '', 'lastname required')
+    ->isTrue(strlen($firstname . ' ' . $lastname) > 10, 'fullname length must be greater than 10');
+
+$valid = $field->isValid(new \PluginSimpleValidate\Libraries\Language('en'));
+
+if (!$valid) {
+    $errors = $field->getErrors();   
+}
+```
+The `$errors` will be
+```php
+<?php
+[
+    'lastname required',
+    'fullname length must be greater than 10'
 ];
 ```
 

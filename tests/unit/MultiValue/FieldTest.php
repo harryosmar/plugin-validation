@@ -16,15 +16,19 @@ class FieldTest extends Base
 
     public function test_is_true()
     {
-        $field = (new Field('name'))
-            ->isTrue(5 < 4, 'error1 occured')
-            ->isTrue(5 > 3, 'error2 occured')
-            ->isTrue(false, 'error3 occured');;
+        $firstname = 'harry';
+        $lastname = '';
+        $field = new Field('name');
+        $field->isTrue($firstname !== '', 'firstname required')
+            ->isTrue($lastname !== '', 'lastname required')
+            ->isTrue(strlen($firstname . ' ' . $lastname) > 10, 'fullname length must be greater than 10');
+
         $this->assertFalse($field->isValid($this->language));
         $this->assertEquals([
-            'error1 occured',
-            'error3 occured'
+            'lastname required',
+            'fullname length must be greater than 10'
         ], $field->getErrors());
+
     }
 
     public function test_multi_rules()
@@ -41,6 +45,5 @@ class FieldTest extends Base
             'field must be a valid email address',
             'field length must be greater or equal than 5 or less or equal than 10',
         ], $field->getErrors());
-
     }
 }
