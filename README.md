@@ -128,38 +128,76 @@ then `$erros` values will be
 ```
 ## Field
 There are 2 type of `field` available :
-- Field with single value
+- Field with single value `PluginSimpleValidate\Field`
 ```php
 <?php
 use PluginSimpleValidate\Field;
+use PluginSimpleValidate\Validation;
 
-$field = new Field('name', 'value');
-$field->required()->lengthGreaterOrEqualThan(10);
-```
-- Field with multi values
-```php
-<?php
-use PluginSimpleValidate\MultiValues\Field;
+$firstNameField = (new Field('firstname', ''))->required()->lengthGreaterOrEqualThan(4);
+$lastNameField = (new Field('lastname', ''))->required()->lengthGreaterOrEqualThan(4);
+$fullNameField = (new Field(
+    'fullname',
+    $firstNameField->getValue() . ' ' . $lastNameField->getValue()
+))->lengthGreaterOrEqualThan(10);
 
-$firstname = 'harry';
-$lastname = '';
-$field = new Field('name');
-$field->isTrue($firstname !== '', 'firstname required')
-    ->isTrue($lastname !== '', 'lastname required')
-    ->isTrue(strlen($firstname . ' ' . $lastname) > 10, 'fullname length must be greater than 10');
+/** @var Validation $validation  */
+$validation->addField($firstNameField)->addField($lastNameField)->addField($fullNameField);
 
-$valid = $field->isValid(new \PluginSimpleValidate\Libraries\Language('en'));
-
-if (!$valid) {
-    $errors = $field->getErrors();   
+if (!$validation->run()) {
+    $errors = $validation->getErrors();
 }
 ```
 The `$errors` will be
 ```php
 <?php
 [
-    'lastname required',
-    'fullname length must be greater than 10'
+    [
+        'firstname' => [
+            'field is required',
+            'field length must be greater or equal than 4',
+        ],
+        'lastname' => [
+            'field is required',
+            'field length must be greater or equal than 4',
+        ],
+        'fullname' => [
+            'field length must be greater or equal than 10',
+        ],
+    ]
+];
+```
+
+- Field with multi values `PluginSimpleValidate\MultiValues\Field`
+```php
+<?php
+use PluginSimpleValidate\MultiValues\Field;
+use PluginSimpleValidate\Validation;
+
+$firstName = '';
+$lastName = '';
+
+/** @var Validation $validation  */
+$validation->addField((new Field('name'))
+    ->isTrue($firstName !== '', 'first name required')->isTrue(strlen($firstName) >= 4, 'first name length must be at least 4')
+    ->isTrue($lastName !== '', 'last name required')->isTrue(strlen($lastName) >= 4, 'last name length must be at least 4')
+    ->isTrue(strlen($firstName . ' ' . $lastName) >= 10, 'full name length must be at least 10'));
+
+if (!$validation->run()) {
+    $errors = $validation->getErrors();   
+}
+```
+The `$errors` will be
+```php
+<?php
+[
+    'name' => [
+        'first name required',
+        'first name length must be at least 4',
+        'last name required',
+        'last name length must be at least 4',
+        'full name length must be at least 10',
+    ]
 ];
 ```
 

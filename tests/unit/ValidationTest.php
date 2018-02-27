@@ -65,6 +65,39 @@ class ValidationTest extends Base
         );
     }
 
+    public function test_run_name_validation()
+    {
+        $firstNameField = (new Field('firstname', ''))->required()->lengthGreaterOrEqualThan(4);
+        $lastNameField = (new Field('lastname', ''))->required()->lengthGreaterOrEqualThan(4);
+        $fullNameField = (new Field(
+            'fullname',
+            $firstNameField->getValue() . ' ' . $lastNameField->getValue()
+        ))->lengthGreaterOrEqualThan(10);
+
+        $validation = new Validation($this->language);
+
+        $validation->addField($firstNameField)->addField($lastNameField)->addField($fullNameField);
+
+        $this->assertFalse($validation->run());
+
+        $this->assertEquals(
+            [
+                'firstname' => [
+                    'field is required',
+                    'field length must be greater or equal than 4'
+                ],
+                'lastname' => [
+                    'field is required',
+                    'field length must be greater or equal than 4'
+                ],
+                'fullname' => [
+                    'field length must be greater or equal than 10',
+                ],
+            ],
+            $validation->getErrors()
+        );
+    }
+
     public function test_run_with_error_break()
     {
         $validation = $this->generateValidationMultiFieldMultiRules();
