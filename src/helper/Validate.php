@@ -228,7 +228,7 @@ if (! function_exists('valid_phone_number')) {
 if (! function_exists('run_length_rule')) {
     function run_length_rule($value, $result) {
         if (!is_valid_type_for_length($value)) {
-            throw new InvalidTypeParameter('Invalid parameter type');
+            throw new InvalidTypeParameter();
         }
 
         return $result;

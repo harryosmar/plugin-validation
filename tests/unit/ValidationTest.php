@@ -3,7 +3,6 @@
 namespace PluginSimpleValidate\Tests\unit;
 
 use PluginSimpleValidate\Field;
-use function PluginSimpleValidate\helper\Validate\length;
 use PluginSimpleValidate\Validation;
 
 class ValidationTest extends Base
