@@ -21,7 +21,7 @@ Add this composer.json file
 ```json
 {
     "require": {
-        "harryosmar/plugin-validation": "^2.1"
+        "harryosmar/plugin-validation": "^2.2"
     }
 }
 ```
@@ -210,7 +210,7 @@ The `$erros` will be
     'scope' => [
         'field is required',
     ],
-]
+];
 ```
 
 
@@ -523,6 +523,7 @@ $field->isTrue('this is for error message');
 function someMethod() : bool 
 {
     // add logic here
+    return true;
 }
 ```
 
