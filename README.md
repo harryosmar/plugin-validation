@@ -21,7 +21,7 @@ Add this composer.json file
 ```json
 {
     "require": {
-        "harryosmar/plugin-validation": "^2.0"
+        "harryosmar/plugin-validation": "^2.1"
     }
 }
 ```
