@@ -12,7 +12,7 @@ use Throwable;
 
 class RuleNotExist extends \Exception
 {
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct($message = "Rule does not exist", $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

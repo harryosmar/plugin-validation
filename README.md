@@ -20,12 +20,6 @@ Add this composer.json file
 
 ```json
 {
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:harryosmar/plugin-validation.git"
-        }
-    ],
     "require": {
         "harryosmar/plugin-validation": "^2.0"
     }
@@ -36,6 +30,12 @@ Then running
 ```bash
 $ composer install
 ```
+
+Or type
+```
+composer require harryosmar/plugin-validation
+```
+in `composer.json` root directory
 
 ## How To Use
 * [1. initialize](#1-initialize)
@@ -126,6 +126,94 @@ then `$erros` values will be
     ]
 ];
 ```
+
+## 2 Types Validation
+* [Validation](#validation)
+* [Form Validation](#form-validation)
+
+
+### Validation
+see the [sample code](#initialize)
+
+### Form Validation
+```php
+<?php
+use PluginSimpleValidate\FormValidation;
+
+/** @var \PluginSimpleValidate\Libraries\Language $language */
+$validation = new FormValidation($language);
+
+/**
+* sample of request body
+ * [
+       'email' => 'abc',
+       'grant_type' => '',
+       'client_id' => '',
+       'client_secret' => '',
+       'redirect_uri' => '',
+       'username' => '',
+       'password' => '',
+       'scope' => '',
+   ]
+*/
+
+
+$validation->createFromPost(
+    \Zend\Diactoros\ServerRequestFactory::fromGlobals(),
+    [
+        'email' => 'required,validEmail',
+        'grant_type' => 'required',
+        'client_id' => 'required,isNumber',
+        'client_secret' => 'required,isAlphaOrNumeric',
+        'redirect_uri' => 'required',
+        'username' => 'required,lengthBetweenOrEqual:5:10',
+        'password' => 'required,lengthGreaterThan:5',
+        'scope' => 'required',
+    ]
+);
+
+$validation->run();
+
+if (!$validation->getStatus()) {
+    $errors = $validation->getErrors();
+}
+```
+The `$erros` will be
+```php
+<?php
+[
+    'email' => [
+        'field must be a valid email address',
+    ],
+    'grant_type' => [
+        'field is required',
+    ],
+    'client_id' => [
+        'field is required',
+        'field must be a number',
+    ],
+    'client_secret' => [
+        'field is required',
+        'field may only letters and numbers',
+    ],
+    'redirect_uri' => [
+        'field is required',
+    ],
+    'username' => [
+        'field is required',
+        'field length must be greater or equal than 5 or less or equal than 10',
+    ],
+    'password' => [
+        'field is required',
+        'field length must be greater than 5',
+    ],
+    'scope' => [
+        'field is required',
+    ],
+]
+```
+
+
 ## Field
 There are 2 type of `field` available :
 - Field with single value `PluginSimpleValidate\Field`

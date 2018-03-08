@@ -186,7 +186,7 @@ abstract class RuleMapping
     protected function checkRule($ruleName)
     {
         if (!isset($this->list[$ruleName])) {
-            throw new RuleNotExist('Rule does not exist');
+            throw new RuleNotExist();
         }
     }
 }
